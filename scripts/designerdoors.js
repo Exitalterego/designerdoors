@@ -1,7 +1,7 @@
 const modName = 'Designer Doors';
 const modId = 'designerdoors';
 
-Hooks.on('setup', () => {
+Hooks.on('setup', (game) => {
 
     console.log(`Loading ${modName} module...`);
 
@@ -38,5 +38,19 @@ Hooks.on('setup', () => {
         default: `modules/${modId}/icons/padlock.svg`,
         type: String,
     });
+
+    const cacheTex = (key => {
+
+        const defaultPath = game.settings.get(modId, key);
+        TextureLoader.loader.loadTexture(defaultPath);
+
+    });
+
+    // Cache default icons on setup of world
+    console.log(`Loading ${modName} default door textures`);
+    cacheTex('doorClosedDefault');
+    cacheTex('doorOpenDefault');
+    cacheTex('doorLockedDefault');
+    console.log(`${modName} texture loading complete`);
 
 });
