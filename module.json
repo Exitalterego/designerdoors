@@ -9,12 +9,8 @@
       "/scripts/shim.js"
    ],
    "url": "https://www.github.com/exitalterego/designerdoors",
-    /* manifest: Be careful not to point to the html version on github for example, always point 
-      to the raw file and always to the latest manifest file otherwise the package wouldn't be updateable */
-   "manifest": "https://link.com/to/raw.module.json",
-    /* download: Point this to the zip file archive of the latest version. Do not point this to your master repository branch
-       but instead to a version tag, otherwise you risk having users downloading the wrong version */
-   "download": "https://github.com/kakaroto/fvtt-module-lmrtfy/archive/v1.3.zip",
+   "manifest": "https://www.github.com/exitalterego/designerdoors/releases/download/latest/module.json",
+   "download": "https://www.github.com/exitalterego/designerdoors/releases/download/0.0.0/module.zip",
    "minimumCoreVersion": "0.6.6",
    "compatibleCoreVersion": "0.7.4",
 
@@ -30,5 +26,5 @@
    "readme": "https://www.github.com/exitalterego/designerdoors/README.md",
    "bugs": "https://www.github.com/exitalterego/designerdoors/issues",
    "license": "https://www.github.com/exitalterego/designerdoors/LICENSE",
-   "changelog": "https://link.com/to/this/versions/changelog",
+   "changelog": "https://link.com/to/this/versions/changelog"
 }
