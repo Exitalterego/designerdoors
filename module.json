@@ -1,30 +1,30 @@
 {
-   "name": "designerdoors",
-   "title": "Designer Doors",
-   "description": "A small module that allows the GM to assign alternative icons to the door controls. Each door can be given its own set of icons for each of the Closed, Open and Locked statuses.",
-   "version": "0.0.0",
-
-   "esmodules": [
-      "/scripts/designerdoors.js",
-      "/scripts/shim.js"
-   ],
-   "url": "https://www.github.com/exitalterego/designerdoors",
-   "manifest": "https://www.github.com/exitalterego/designerdoors/releases/download/latest/module.json",
-   "download": "https://www.github.com/exitalterego/designerdoors/releases/download/0.0.0/module.zip",
-   "minimumCoreVersion": "0.6.6",
-   "compatibleCoreVersion": "0.7.4",
-
-   "type": "module",
-   "systems": [null], 
-
-   "author": "Exitalterego",
-   "authors": [{
-      "name": "Exitalterego",
-      "discord": "Exitalterego#8315"
-   }],
-   
-   "readme": "https://www.github.com/exitalterego/designerdoors/README.md",
-   "bugs": "https://www.github.com/exitalterego/designerdoors/issues",
-   "license": "https://www.github.com/exitalterego/designerdoors/LICENSE",
-   "changelog": "https://link.com/to/this/versions/changelog"
+    "name": "designerdoors",
+    "title": "Designer Doors",
+    "description": "A small module that allows the GM to assign alternative icons to the door controls. Each door can be given its own set of icons for each of the Closed, Open and Locked statuses.",
+    "version": "0.2.0",
+    "esmodules": [
+        "/scripts/designerdoors.js",
+        "/scripts/shim.js"
+    ],
+    "url": "https://www.github.com/exitalterego/designerdoors",
+    "manifest": "https://github.com/Exitalterego/designerdoors/releases/latest/download/module.json",
+    "download": "https://github.com/Exitalterego/designerdoors/releases/download/0.2.0/module.zip",
+    "minimumCoreVersion": "0.6.6",
+    "compatibleCoreVersion": "0.7.4",
+    "type": "module",
+    "systems": [
+        null
+    ],
+    "author": "Exitalterego",
+    "authors": [
+        {
+            "name": "Exitalterego",
+            "discord": "Exitalterego#8315"
+        }
+    ],
+    "readme": "https://www.github.com/exitalterego/designerdoors/README.md",
+    "bugs": "https://www.github.com/exitalterego/designerdoors/issues",
+    "license": "https://www.github.com/exitalterego/designerdoors/LICENSE",
+    "changelog": "https://link.com/to/this/versions/changelog"
 }
