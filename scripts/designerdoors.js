@@ -1,3 +1,5 @@
+import { libWrapper } from './shim.js';
+
 const modName = 'Designer Doors';
 const modId = 'designerdoors';
 
@@ -52,5 +54,39 @@ Hooks.on('setup', (game) => {
     cacheTex('doorOpenDefault');
     cacheTex('doorLockedDefault');
     console.log(`${modName} texture loading complete`);
+
+    async function getTextureOverride() {
+
+        console.log('SIRIUS');
+        if (this.wall.getFlag(modId, 'doorIcon') === false) {
+
+            console.log('this wall is flagged');
+            let s = this.wall.data.ds;
+            const ds = CONST.WALL_DOOR_STATES;
+            if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
+            const textures = this.wall.getFlag(modId, 'doorIcon');
+            return getTexture(textures[s] || ds.CLOSED);
+
+        // eslint-disable-next-line padded-blocks
+        // eslint-disable-next-line no-else-return
+        } else {
+
+            console.log('this wall is not flagged');
+            let s = this.wall.data.ds;
+            console.log(this.wall.data);
+            const ds = CONST.WALL_DOOR_STATES;
+            if ( !game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
+            const textures = {
+                [ds.LOCKED]: game.settings.get('foundrydoors', 'doorLockedPathDefault'),
+                [ds.CLOSED]: game.settings.get('foundrydoors', 'doorClosedPathDefault'),
+                [ds.OPEN]: game.settings.get('foundrydoors', 'doorOpenPathDefault')
+            };
+            return getTexture(textures[s] || ds.CLOSED);
+
+        }
+
+    }
+
+    libWrapper.register(modId, 'DoorControl.prototype._getTexture', getTextureOverride, 'MIXED');
 
 });
