@@ -57,10 +57,8 @@ Hooks.on('setup', (game) => {
 
     async function getTextureOverride() {
 
-        console.log('SIRIUS');
         if (this.wall.getFlag(modId, 'doorIcon') === false) {
 
-            console.log('this wall is flagged');
             let s = this.wall.data.ds;
             const ds = CONST.WALL_DOOR_STATES;
             if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
@@ -71,9 +69,7 @@ Hooks.on('setup', (game) => {
         // eslint-disable-next-line no-else-return
         } else {
 
-            console.log('this wall is not flagged');
             let s = this.wall.data.ds;
-            console.log(this.wall.data);
             const ds = CONST.WALL_DOOR_STATES;
             if ( !game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
             const textures = {

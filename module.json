@@ -13,9 +13,6 @@
     "minimumCoreVersion": "0.6.6",
     "compatibleCoreVersion": "0.7.4",
     "type": "module",
-    "systems": [
-        null
-    ],
     "author": "Exitalterego",
     "authors": [
         {
