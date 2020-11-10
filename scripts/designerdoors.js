@@ -57,7 +57,7 @@ Hooks.on('setup', (game) => {
 
     async function getTextureOverride() {
 
-        if (this.wall.getFlag(modId, 'doorIcon') === false) {
+        if (this.wall.getFlag(modId, 'doorIcon') === true) {
 
             let s = this.wall.data.ds;
             const ds = CONST.WALL_DOOR_STATES;
@@ -84,5 +84,46 @@ Hooks.on('setup', (game) => {
     }
 
     libWrapper.register(modId, 'DoorControl.prototype._getTexture', getTextureOverride, 'MIXED');
+
+});
+
+// Wall Config modifications
+Hooks.on('renderWallConfig', (app, html, data) => {
+
+    if (data.object.door === 0) {
+
+        app.setPosition({
+            height: 270,
+            width: 400,
+        });
+        return;
+
+    }
+    app.setPosition({
+        height: 270,
+        width: 400,
+    });
+
+    let thisDoor; // Object containing closed, open and locked paths as parameters
+
+    // Flag logic.
+    // Check for initial flag. If not present set default values. Otherwise initialise empty flag
+    if (app.object.getFlag(modId, 'doorIcon') == null)
+    {
+
+        thisDoor = {
+            doorClosedPath: game.settings.get(modId, 'doorClosedPathDefault'),
+            doorOpenPath: game.settings.get(modId, 'doorOpenPathDefault'),
+            doorLockedPath: game.settings.get(modId, 'doorLockedPathDefault'),
+        };
+        app.object.setFlag(modId, 'doorIcon', thisDoor);
+        console.log(thisDoor);
+
+    } else {
+
+        thisDoor = app.object.getFlag(modId, 'doorIcon');
+        console.log(thisDoor);
+
+    }
 
 });
