@@ -3,7 +3,7 @@ import { libWrapper } from './shim.js';
 const modName = 'Designer Doors';
 const modId = 'designerdoors';
 
-Hooks.on('setup', (game) => {
+Hooks.on('setup', () => {
 
     console.log(`Loading ${modName} module...`);
 
@@ -71,11 +71,11 @@ Hooks.on('setup', (game) => {
 
             let s = this.wall.data.ds;
             const ds = CONST.WALL_DOOR_STATES;
-            if ( !game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
+            if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
             const textures = {
-                [ds.LOCKED]: game.settings.get('foundrydoors', 'doorLockedPathDefault'),
-                [ds.CLOSED]: game.settings.get('foundrydoors', 'doorClosedPathDefault'),
-                [ds.OPEN]: game.settings.get('foundrydoors', 'doorOpenPathDefault')
+                [ds.LOCKED]: game.settings.get(modId, 'doorLockedDefault'),
+                [ds.CLOSED]: game.settings.get(modId, 'doorClosedDefault'),
+                [ds.OPEN]: game.settings.get(modId, 'doorOpenDefault')
             };
             return getTexture(textures[s] || ds.CLOSED);
 
@@ -90,39 +90,25 @@ Hooks.on('setup', (game) => {
 // Wall Config modifications
 Hooks.on('renderWallConfig', (app, html, data) => {
 
-    if (data.object.door === 0) {
-
-        app.setPosition({
-            height: 270,
-            width: 400,
-        });
-        return;
-
-    }
-    app.setPosition({
-        height: 270,
-        width: 400,
-    });
-
     let thisDoor; // Object containing closed, open and locked paths as parameters
 
     // Flag logic.
-    // Check for initial flag. If not present set default values. Otherwise initialise empty flag
-    if (app.object.getFlag(modId, 'doorIcon') == null)
-    {
+    // Check for initial flag. If not present set default values.
+    if (app.object.getFlag(modId, 'doorIcon') === undefined) {
 
+        // If wall has no flag, populate thisDoor from default settings
         thisDoor = {
-            doorClosedPath: game.settings.get(modId, 'doorClosedPathDefault'),
-            doorOpenPath: game.settings.get(modId, 'doorOpenPathDefault'),
-            doorLockedPath: game.settings.get(modId, 'doorLockedPathDefault'),
+            0: game.settings.get(modId, 'doorClosedDefault'),
+            1: game.settings.get(modId, 'doorOpenDefault'),
+            2: game.settings.get(modId, 'doorLockedDefault'),
         };
+        // Then set flag with contents of thisDoor
         app.object.setFlag(modId, 'doorIcon', thisDoor);
-        console.log(thisDoor);
 
     } else {
 
+        // If the flag already exist, populate thisDoor with the flag
         thisDoor = app.object.getFlag(modId, 'doorIcon');
-        console.log(thisDoor);
 
     }
 
