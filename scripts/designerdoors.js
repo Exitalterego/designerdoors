@@ -112,4 +112,46 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 
     }
 
+    let doorClosedFlag = thisDoor.doorClosedPath;
+    let doorOpenFlag = thisDoor.doorOpenPath;
+    let doorLockedFlag = thisDoor.doorLockedPath;
+
+    // html to extend Wall Config form
+    const message =
+    `<div class="form-group">
+        <label>Door Icons</label>
+        <p class="notes">File paths to icons representing various door states.</p>
+        </div>
+
+    <div class="form-group">
+		  <label>Door Close</label>
+		  <div class="form-fields">
+			 <button type="button" class="file-picker" data-type="img" data-target="flags.foundrydoors.doorIcon.doorClosedPath" title="Browse Files" tabindex="-1">
+				<i class="fas fa-file-import fa-fw"></i>
+			 </button>
+			 <input class="img" type="text" name="flags.${modId}.doorIcon.doorClosedPath" value="${doorClosedFlag ? doorClosedFlag : ``}" placeholder="Closed Door Icon Path" data-dtype="String" />
+		  </div>
+	</div>
+
+    <div class="form-group">
+		  <label>Door Open</label>
+		  <div class='form-fields'>
+			 <button type='button' class='file-picker' data-type='img' data-target='flags.foundrydoors.doorIcon.doorOpenPath' title='Browse Files' tabindex='-1'>
+				<i class='fas fa-file-import fa-fw'></i>
+			 </button>
+			 <input class='img' type='text' name='flags.${modId}.doorIcon.doorOpenPath' value='${doorOpenFlag ? doorOpenFlag : ``}' placeholder='Open Door Icon Path' data-dtype='String' />
+		  </div>
+	</div>
+
+    <div class='form-group'>
+		  <label>Door Locked</label>
+		  <div class='form-fields'>
+			 <button type='button' class='file-picker' data-type='img' data-target='flags.foundrydoors.doorIcon.doorLockedPath' title='Browse Files' tabindex='-1'>
+				<i class='fas fa-file-import fa-fw'></i>
+			 </button>
+			 <input class='img' type='text' name='flags.${modId}.doorIcon.doorLockedPath' value='${doorLockedFlag ? doorLockedFlag : ``}' placeholder='Locked Door Icon Path' data-dtype='String' />
+		  </div>
+	</div>
+    `;
+
 });
