@@ -126,7 +126,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     <div class="form-group">
 		  <label>Door Close</label>
 		  <div class="form-fields">
-			 <button type="button" class="file-picker" data-type="img" data-target="flags.foundrydoors.doorIcon.doorClosedPath" title="Browse Files" tabindex="-1">
+			 <button type="button" class="file-picker" data-type="img" data-target="flags.${modId}.doorIcon.doorClosedPath" title="Browse Files" tabindex="-1">
 				<i class="fas fa-file-import fa-fw"></i>
 			 </button>
 			 <input class="img" type="text" name="flags.${modId}.doorIcon.doorClosedPath" value="${doorClosedFlag ? doorClosedFlag : ``}" placeholder="Closed Door Icon Path" data-dtype="String" />
@@ -136,7 +136,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     <div class="form-group">
 		  <label>Door Open</label>
 		  <div class='form-fields'>
-			 <button type='button' class='file-picker' data-type='img' data-target='flags.foundrydoors.doorIcon.doorOpenPath' title='Browse Files' tabindex='-1'>
+			 <button type='button' class='file-picker' data-type='img' data-target='flags.${modId}.doorIcon.doorOpenPath' title='Browse Files' tabindex='-1'>
 				<i class='fas fa-file-import fa-fw'></i>
 			 </button>
 			 <input class='img' type='text' name='flags.${modId}.doorIcon.doorOpenPath' value='${doorOpenFlag ? doorOpenFlag : ``}' placeholder='Open Door Icon Path' data-dtype='String' />
@@ -146,12 +146,26 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     <div class='form-group'>
 		  <label>Door Locked</label>
 		  <div class='form-fields'>
-			 <button type='button' class='file-picker' data-type='img' data-target='flags.foundrydoors.doorIcon.doorLockedPath' title='Browse Files' tabindex='-1'>
+			 <button type='button' class='file-picker' data-type='img' data-target='flags.${modId}.doorIcon.doorLockedPath' title='Browse Files' tabindex='-1'>
 				<i class='fas fa-file-import fa-fw'></i>
 			 </button>
 			 <input class='img' type='text' name='flags.${modId}.doorIcon.doorLockedPath' value='${doorLockedFlag ? doorLockedFlag : ``}' placeholder='Locked Door Icon Path' data-dtype='String' />
 		  </div>
 	</div>
     `;
+
+    // Thanks to Calego#0914 on the League of Extraordinary FoundryVTT Developers
+    // Discord server for the jQuery assistance here.
+    // Adds form-group and buttons to the correct position on the Wall Config
+    html.find('.form-group').last().after(message);
+
+    // File Picker buttons
+    const button1 = html.find(`button[data-target="flags.${modId}.doorIcon.doorClosedPath"]`)[0];
+    const button2 = html.find(`button[data-target="flags.${modId}.doorIcon.doorOpenPath"]`)[0];
+    const button3 = html.find(`button[data-target="flags.${modId}.doorIcon.doorLockedPath"]`)[0];
+
+    app._activateFilePicker(button1);
+    app._activateFilePicker(button2);
+    app._activateFilePicker(button3);
 
 });
