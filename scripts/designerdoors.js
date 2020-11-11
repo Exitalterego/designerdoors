@@ -124,33 +124,33 @@ Hooks.on('renderWallConfig', (app, html, data) => {
         </div>
 
     <div class="form-group">
-		  <label>Door Close</label>
-		  <div class="form-fields">
-			 <button type="button" class="file-picker" data-type="img" data-target="flags.${modId}.doorIcon.doorClosedPath" title="Browse Files" tabindex="-1">
-				<i class="fas fa-file-import fa-fw"></i>
-			 </button>
-			 <input class="img" type="text" name="flags.${modId}.doorIcon.doorClosedPath" value="${doorClosedFlag ? doorClosedFlag : ``}" placeholder="Closed Door Icon Path" data-dtype="String" />
-		  </div>
+		<label>Door Close</label>
+		<div class="form-fields">
+			<button type="button" class="file-picker" data-type="img" data-target="flags.${modId}.doorIcon.doorClosedPath" title="Browse Files" tabindex="-1">
+			    <i class="fas fa-file-import fa-fw"></i>
+			</button>
+			<input class="img" type="text" name="flags.${modId}.doorIcon.doorClosedPath" value="${doorClosedFlag ? doorClosedFlag : ``}" placeholder="Closed Door Icon Path" data-dtype="String" />
+		</div>
 	</div>
 
     <div class="form-group">
-		  <label>Door Open</label>
-		  <div class='form-fields'>
-			 <button type='button' class='file-picker' data-type='img' data-target='flags.${modId}.doorIcon.doorOpenPath' title='Browse Files' tabindex='-1'>
+		<label>Door Open</label>
+		<div class='form-fields'>
+			<button type='button' class='file-picker' data-type='img' data-target='flags.${modId}.doorIcon.doorOpenPath' title='Browse Files' tabindex='-1'>
 				<i class='fas fa-file-import fa-fw'></i>
-			 </button>
-			 <input class='img' type='text' name='flags.${modId}.doorIcon.doorOpenPath' value='${doorOpenFlag ? doorOpenFlag : ``}' placeholder='Open Door Icon Path' data-dtype='String' />
-		  </div>
+			</button>
+			<input class='img' type='text' name='flags.${modId}.doorIcon.doorOpenPath' value='${doorOpenFlag ? doorOpenFlag : ``}' placeholder='Open Door Icon Path' data-dtype='String' />
+	    </div>
 	</div>
 
     <div class='form-group'>
-		  <label>Door Locked</label>
-		  <div class='form-fields'>
-			 <button type='button' class='file-picker' data-type='img' data-target='flags.${modId}.doorIcon.doorLockedPath' title='Browse Files' tabindex='-1'>
-				<i class='fas fa-file-import fa-fw'></i>
-			 </button>
-			 <input class='img' type='text' name='flags.${modId}.doorIcon.doorLockedPath' value='${doorLockedFlag ? doorLockedFlag : ``}' placeholder='Locked Door Icon Path' data-dtype='String' />
-		  </div>
+		<label>Door Locked</label>
+		<div class='form-fields'>
+			<button type='button' class='file-picker' data-type='img' data-target='flags.${modId}.doorIcon.doorLockedPath' title='Browse Files' tabindex='-1'>
+			    <i class='fas fa-file-import fa-fw'></i>
+			</button>
+			<input class='img' type='text' name='flags.${modId}.doorIcon.doorLockedPath' value='${doorLockedFlag ? doorLockedFlag : ``}' placeholder='Locked Door Icon Path' data-dtype='String' />
+        </div>
 	</div>
     `;
 
@@ -167,5 +167,16 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     app._activateFilePicker(button1);
     app._activateFilePicker(button2);
     app._activateFilePicker(button3);
+
+    // On submitting the Wall Config form, requested textures are added to the cache
+    const form = document.getElementById('wall-config');
+    form.submit.disabled = false;
+    form.addEventListener("submit", () => {
+
+        TextureLoader.loader.loadTexture(thisDoor.doorClosedPath);
+        TextureLoader.loader.loadTexture(thisDoor.doorOpenPath);
+        TextureLoader.loader.loadTexture(thisDoor.doorLockedPath);
+
+    });
 
 });
