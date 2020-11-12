@@ -185,12 +185,12 @@ Hooks.on('renderSettingsConfig', () => {
 
     const form = document.querySelector('form.flexcol');
     form.submit.disabled = false;
-    form.addEventListener("submit", (e) => {
+    form.addEventListener('submit', (e) => {
 
         e.preventDefault();
-        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorClosedPathDefault'));
-        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorOpenPathDefault'));
-        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorLockedPathDefault'));
+        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorClosedDefault'));
+        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorOpenDefault'));
+        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorLockedDefault'));
 
     });
 
