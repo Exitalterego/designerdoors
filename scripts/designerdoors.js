@@ -171,11 +171,26 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     // On submitting the Wall Config form, requested textures are added to the cache
     const form = document.getElementById('wall-config');
     form.submit.disabled = false;
-    form.addEventListener("submit", () => {
+    form.addEventListener('submit', () => {
 
         TextureLoader.loader.loadTexture(thisDoor.doorClosedPath);
         TextureLoader.loader.loadTexture(thisDoor.doorOpenPath);
         TextureLoader.loader.loadTexture(thisDoor.doorLockedPath);
+
+    });
+
+});
+
+Hooks.on('renderSettingsConfig', () => {
+
+    const form = document.querySelector('form.flexcol');
+    form.submit.disabled = false;
+    form.addEventListener("submit", (e) => {
+
+        e.preventDefault();
+        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorClosedPathDefault'));
+        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorOpenPathDefault'));
+        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorLockedPathDefault'));
 
     });
 
