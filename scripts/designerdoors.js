@@ -118,9 +118,9 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 
         // If wall has no flag, populate thisDoor from default settings
         thisDoor = {
-            0: game.settings.get(modId, 'doorClosedDefault'),
-            1: game.settings.get(modId, 'doorOpenDefault'),
-            2: game.settings.get(modId, 'doorLockedDefault'),
+            doorClosedPath: game.settings.get(modId, 'doorClosedDefault'),
+            doorOpenPath: game.settings.get(modId, 'doorOpenDefault'),
+            doorLockedPath: game.settings.get(modId, 'doorLockedDefault'),
         };
         // Then set flag with contents of thisDoor
         app.object.setFlag(modId, 'doorIcon', thisDoor);
@@ -189,10 +189,10 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     app._activateFilePicker(button3);
 
     // On submitting the Wall Config form, requested textures are added to the cache
-    const form = document.querySelector('wall-config');
-    form.submit.disabled = false;
-    form.addEventListener('submit', () => {
+    const form = document.getElementById('wall-config');
+    form.addEventListener('submit', (e) => {
 
+        e.preventDefault();
         TextureLoader.loader.loadTexture(thisDoor.doorClosedPath);
         TextureLoader.loader.loadTexture(thisDoor.doorOpenPath);
         TextureLoader.loader.loadTexture(thisDoor.doorLockedPath);
@@ -207,8 +207,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 // form submission.
 Hooks.on('renderSettingsConfig', () => {
 
-    const form = document.querySelector('form.flexcol');
-    form.submit.disabled = false;
+    const form = document.getElementById('client-settings');
     form.addEventListener('submit', (e) => {
 
         e.preventDefault();
