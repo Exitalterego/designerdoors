@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-undef */
 import { libWrapper } from './shim.js';
 
 const modName = 'Designer Doors';
@@ -90,6 +92,24 @@ Hooks.on('setup', () => {
 // Wall Config modifications
 Hooks.on('renderWallConfig', (app, html, data) => {
 
+    // If the wall is not a door, break out of this script.
+    // This will stop Designer Doors being added to the wall config form
+    if (data.object.door === 0) {
+
+        app.setPosition({
+            height: 270,
+            width: 400,
+        });
+        return;
+
+    }
+
+    // If the wall is a door, extend the size of the wall config form
+    app.setPosition({
+        height: 700,
+        width: 400,
+    });
+
     let thisDoor; // Object containing closed, open and locked paths as parameters
 
     // Flag logic.
@@ -112,9 +132,9 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 
     }
 
-    let doorClosedFlag = thisDoor.doorClosedPath;
-    let doorOpenFlag = thisDoor.doorOpenPath;
-    let doorLockedFlag = thisDoor.doorLockedPath;
+    const doorClosedFlag = thisDoor.doorClosedPath;
+    const doorOpenFlag = thisDoor.doorOpenPath;
+    const doorLockedFlag = thisDoor.doorLockedPath;
 
     // html to extend Wall Config form
     const message =
@@ -169,7 +189,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     app._activateFilePicker(button3);
 
     // On submitting the Wall Config form, requested textures are added to the cache
-    const form = document.getElementById('wall-config');
+    const form = document.querySelector('wall-config');
     form.submit.disabled = false;
     form.addEventListener('submit', () => {
 
@@ -181,6 +201,10 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 
 });
 
+// Cache default textures on submitting Settings Config
+// Only really needed if default textures are changed, but as I haven't
+// yet figured out how to only run on changes, it will just run on every
+// form submission.
 Hooks.on('renderSettingsConfig', () => {
 
     const form = document.querySelector('form.flexcol');
