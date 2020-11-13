@@ -1,5 +1,5 @@
-# Designer Doors
-#### Making better looking doors since 2020
+![image](https://user-images.githubusercontent.com/12241468/99018302-a4a83d80-2551-11eb-9a4b-32853b7302c2.png)
+### Making better looking doors since 2020
 
 ![code style](https://img.shields.io/badge/code%20style-air--bnb-brightgreen?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/exitalterego/designerdoors?color=bright%20green&style=flat-square)
@@ -9,6 +9,16 @@
 
  Foundry VTT Module For Changing Door Icons
  
+## Manifest
+https://raw.githubusercontent.com/Exitalterego/designerdoors/main/module.json
+
+## Feedback
+I am welcome to constructive feedback, improvement suggestions, additional feature requests and bug reports.
+
+For all of these, please open an Issue here on Github.
+
+If you can code your own features or bug fixes, you may also do a pull request. Full credit will be give for your contributions. 
+
 ## Abandonment
 Abandoned modules are a (potential) problem for Foundry, because users and/or other modules might rely on abandoned modules, which might break in future Foundry updates.<br>
 I consider this module abandoned if all of the below cases apply:
@@ -21,3 +31,8 @@ I consider this module abandoned if all of the below cases apply:
 If the above cases apply (as judged by the "League of Extraordinary Foundry VTT Developers" admins), I give permission to the "League of Extraordinary Foundry VTT Developers" admins to assign one or more developers to take over this module, including requesting the Foundry team to reassign the module to the new developer(s).<br>
 I require the "League of Extraordinary Foundry VTT Developers" admins to send me an email 2 weeks before the reassignment takes place, to give me one last chance to prevent the reassignment.
 I require to be credited for my work in all future releases.
+
+## Credits
+* Logo Font - **Couture** by *Chase Babb*
+* Icons - **game-icons.net** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*
+* Module Name - Inspiration kindly provided by @Norc#1234 on the FoundryVTT Discord server
