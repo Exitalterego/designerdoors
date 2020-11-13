@@ -59,18 +59,9 @@ Hooks.on('setup', () => {
 
     async function getTextureOverride() {
 
-        if (this.wall.getFlag(modId, 'doorIcon') === true) {
+        if (this.wall.getFlag(modId, 'doorIcon') === undefined) {
 
-            let s = this.wall.data.ds;
-            const ds = CONST.WALL_DOOR_STATES;
-            if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
-            const textures = this.wall.getFlag(modId, 'doorIcon');
-            return getTexture(textures[s] || ds.CLOSED);
-
-        // eslint-disable-next-line padded-blocks
-        // eslint-disable-next-line no-else-return
-        } else {
-
+            // This is the method from foundry.js, meaning default textures will render
             let s = this.wall.data.ds;
             const ds = CONST.WALL_DOOR_STATES;
             if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
@@ -82,6 +73,18 @@ Hooks.on('setup', () => {
             return getTexture(textures[s] || ds.CLOSED);
 
         }
+
+        // This will cause wall specific icons to be rendered
+        let s = this.wall.data.ds;
+        const ds = CONST.WALL_DOOR_STATES;
+        if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
+        const wallPaths = this.wall.getFlag(modId, 'doorIcon');
+        const textures = {
+            [ds.LOCKED]: wallPaths['doorLockedPath'],
+            [ds.CLOSED]: wallPaths['doorClosedPath'],
+            [ds.OPEN]: wallPaths['doorOpenPath'],
+        };
+        return getTexture(textures[s] || ds.CLOSED);
 
     }
 
