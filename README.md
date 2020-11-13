@@ -15,7 +15,7 @@ https://raw.githubusercontent.com/Exitalterego/designerdoors/main/module.json
 ## Feedback
 I am welcome to constructive feedback, improvement suggestions, additional feature requests and bug reports.
 
-For all of these, please open an Issue here on Github.
+For all of these, please open an Issue here on Github. You can also find me on Discord as Exitalterego#8315, however I do not guarentee a swift response through there. Github issues are preferred.
 
 If you can code your own features or bug fixes, you may also do a pull request. Full credit will be give for your contributions. 
 
@@ -35,4 +35,4 @@ I require to be credited for my work in all future releases.
 ## Credits
 * Logo Font - **Couture** by *Chase Babb*
 * Icons - **game-icons.net** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*
-* Module Name - Inspiration kindly provided by @Norc#1234 on the FoundryVTT Discord server
+* Module Name - Inspiration kindly provided by *Norc#5108* on the FoundryVTT Discord server
