@@ -61,7 +61,6 @@ Hooks.on('setup', () => {
 
         if (this.wall.getFlag(modId, 'doorIcon') === undefined) {
 
-            // This is the method from foundry.js, meaning default textures will render
             let s = this.wall.data.ds;
             const ds = CONST.WALL_DOOR_STATES;
             if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
@@ -74,7 +73,6 @@ Hooks.on('setup', () => {
 
         }
 
-        // This will cause wall specific icons to be rendered
         let s = this.wall.data.ds;
         const ds = CONST.WALL_DOOR_STATES;
         if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
@@ -196,9 +194,19 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     form.addEventListener('submit', (e) => {
 
         e.preventDefault();
-        TextureLoader.loader.loadTexture(thisDoor.doorClosedPath);
-        TextureLoader.loader.loadTexture(thisDoor.doorOpenPath);
-        TextureLoader.loader.loadTexture(thisDoor.doorLockedPath);
+
+        // Grab values from form input
+        const nameDCP = `flags.${modId}.doorIcon.doorClosedPath`;
+        const nameDOP = `flags.${modId}.doorIcon.doorOpenPath`;
+        const nameDLP = `flags.${modId}.doorIcon.doorLockedPath`;
+
+        const wcDCD = document.getElementsByName(nameDCP)[0].value;
+        const wcDOD = document.getElementsByName(nameDOP)[0].value;
+        const wcDLD = document.getElementsByName(nameDLP)[0].value;
+
+        TextureLoader.loader.loadTexture(wcDCD);
+        TextureLoader.loader.loadTexture(wcDOD);
+        TextureLoader.loader.loadTexture(wcDLD);
 
     });
 
@@ -214,9 +222,15 @@ Hooks.on('renderSettingsConfig', () => {
     form.addEventListener('submit', (e) => {
 
         e.preventDefault();
-        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorClosedDefault'));
-        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorOpenDefault'));
-        TextureLoader.loader.loadTexture(game.settings.get(modId, 'doorLockedDefault'));
+
+        // Grab values from form input
+        const sdCD = document.getElementsByName(`${modId}.doorClosedDefault`);
+        const sdOD = document.getElementsByName(`${modId}.doorOpenDefault`);
+        const sdLD = document.getElementsByName(`${modId}.doorLockedDefault`);
+
+        TextureLoader.loader.loadTexture(sdCD[0].value);
+        TextureLoader.loader.loadTexture(sdOD[0].value);
+        TextureLoader.loader.loadTexture(sdLD[0].value);
 
     });
 
