@@ -78,9 +78,9 @@ Hooks.on('setup', () => {
         if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
         const wallPaths = this.wall.getFlag(modId, 'doorIcon');
         const textures = {
-            [ds.LOCKED]: wallPaths['doorLockedPath'],
-            [ds.CLOSED]: wallPaths['doorClosedPath'],
-            [ds.OPEN]: wallPaths['doorOpenPath'],
+            [ds.LOCKED]: wallPaths.doorLockedPath,
+            [ds.CLOSED]: wallPaths.doorClosedPath,
+            [ds.OPEN]: wallPaths.doorOpenPath,
         };
         return getTexture(textures[s] || ds.CLOSED);
 
@@ -190,12 +190,10 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     app._activateFilePicker(button3);
 
     // On submitting the Wall Config form, requested textures are added to the cache
+
     const form = document.getElementById('wall-config');
     form.addEventListener('submit', (e) => {
 
-        e.preventDefault();
-
-        // Grab values from form input
         const nameDCP = `flags.${modId}.doorIcon.doorClosedPath`;
         const nameDOP = `flags.${modId}.doorIcon.doorOpenPath`;
         const nameDLP = `flags.${modId}.doorIcon.doorLockedPath`;
@@ -204,6 +202,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
         const wcDOD = document.getElementsByName(nameDOP)[0].value;
         const wcDLD = document.getElementsByName(nameDLP)[0].value;
 
+        e.preventDefault();
         TextureLoader.loader.loadTexture(wcDCD);
         TextureLoader.loader.loadTexture(wcDOD);
         TextureLoader.loader.loadTexture(wcDLD);
@@ -221,17 +220,39 @@ Hooks.on('renderSettingsConfig', () => {
     const form = document.getElementById('client-settings');
     form.addEventListener('submit', (e) => {
 
-        e.preventDefault();
-
-        // Grab values from form input
         const sdCD = document.getElementsByName(`${modId}.doorClosedDefault`);
         const sdOD = document.getElementsByName(`${modId}.doorOpenDefault`);
         const sdLD = document.getElementsByName(`${modId}.doorLockedDefault`);
 
+        e.preventDefault();
         TextureLoader.loader.loadTexture(sdCD[0].value);
         TextureLoader.loader.loadTexture(sdOD[0].value);
         TextureLoader.loader.loadTexture(sdLD[0].value);
 
     });
+
+});
+
+Hooks.on('canvasInit', () => {
+
+    const sceneWalls = game.scenes.viewed.data.walls;
+
+    for (let i = 0; i < sceneWalls.length; i++) {
+
+        if (modId in sceneWalls[i].flags) {
+
+            const wall = sceneWalls[i];
+
+            const wcCD = wall.flags.designerdoors.doorIcon.doorClosedPath;
+            const wcOD = wall.flags.designerdoors.doorIcon.doorOpenPath;
+            const wcLD = wall.flags.designerdoors.doorIcon.doorLockedPath;
+
+            TextureLoader.loader.loadTexture(wcCD);
+            TextureLoader.loader.loadTexture(wcOD);
+            TextureLoader.loader.loadTexture(wcLD);
+
+        }
+
+    }
 
 });
