@@ -9,27 +9,27 @@
 
 Foundry VTT Module For Changing Door Icons
 
-## Installation
+### Installation
 Either paste the manifest link below directly into the Module Installer in your Foundry server 'Configuration and Setup' tab, or search for the module listed in the same Module Installer.
 
-## Compatability
+### Compatability
 This module uses a re-write of the *\_getTexture* method from the Door Controller object. This method is, as far as I am aware, only utilised to choose which image to use for your doors.
 
 As such, there should be no compatability issues unless another module directly tries to change door icons.
 
 If I become aware of any such modules they will be listed here, but at the time of writing there are no known conflicts.
 
-## Manifest
+### Manifest
 https://raw.githubusercontent.com/Exitalterego/designerdoors/main/module.json
 
-## Feedback
+### Feedback
 I am welcome to constructive feedback, improvement suggestions, additional feature requests and bug reports.
 
 For all of these, please open an Issue here on Github. You can also find me on Discord as Exitalterego#8315, however I do not guarentee a swift response through there. Github issues are preferred.
 
 If you can code your own features or bug fixes, you may also do a pull request. Full credit will be give for your contributions. 
 
-## Abandonment
+### Abandonment
 Abandoned modules are a (potential) problem for Foundry, because users and/or other modules might rely on abandoned modules, which might break in future Foundry updates.<br>
 I consider this module abandoned if all of the below cases apply:
 <ul>
@@ -42,7 +42,13 @@ If the above cases apply (as judged by the "League of Extraordinary Foundry VTT 
 I require the "League of Extraordinary Foundry VTT Developers" admins to send me an email 2 weeks before the reassignment takes place, to give me one last chance to prevent the reassignment.
 I require to be credited for my work in all future releases.
 
-## Credits
+### Licence
+Designer Doors is licensed under the [MIT License](https://github.com/Exitalterego/designerdoors/blob/main/LICENSE).
+
+This work is also licensed under the [FOUNDRY VIRTUAL TABLETOP END USER LICENSE AGREEMENT - May 29, 2020](https://foundryvtt.com/article/license/).
+
+
+### Credits
 * Logo Font - **Couture** by *Chase Babb*
 * Icons - **game-icons.net** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*
 * Module Name - Inspiration kindly provided by *Norc#5108* on the FoundryVTT Discord server
