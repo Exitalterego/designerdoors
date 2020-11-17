@@ -50,5 +50,5 @@ This work is also licensed under the [FOUNDRY VIRTUAL TABLETOP END USER LICENSE 
 
 ### Credits
 * Logo Font - **Couture** by *Chase Babb*
-* Icons - **game-icons.net** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*
+* Icons - **[game-icons.net](https://game-icons.net/)** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*
 * Module Name - Inspiration kindly provided by *Norc#5108* on the FoundryVTT Discord server
