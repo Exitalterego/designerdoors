@@ -43,7 +43,7 @@ Hooks.on('setup', () => {
         type: String,
     });
 
-    const cacheTex = (key => {
+    const cacheTex = ((key) => {
 
         const defaultPath = game.settings.get(modId, key);
         TextureLoader.loader.loadTexture(defaultPath);
@@ -67,7 +67,7 @@ Hooks.on('setup', () => {
             const textures = {
                 [ds.LOCKED]: game.settings.get(modId, 'doorLockedDefault'),
                 [ds.CLOSED]: game.settings.get(modId, 'doorClosedDefault'),
-                [ds.OPEN]: game.settings.get(modId, 'doorOpenDefault')
+                [ds.OPEN]: game.settings.get(modId, 'doorOpenDefault'),
             };
             return getTexture(textures[s] || ds.CLOSED);
 
@@ -233,16 +233,20 @@ Hooks.on('renderSettingsConfig', () => {
 
 });
 
+// On scene change, scan for doors and cache textures
 Hooks.on('canvasInit', () => {
 
+    // List of all walls in scene
     const sceneWalls = game.scenes.viewed.data.walls;
 
     for (let i = 0; i < sceneWalls.length; i++) {
 
+        // Check wall for designerdoors flag
         if (modId in sceneWalls[i].flags) {
 
             const wall = sceneWalls[i];
 
+            // If flag found, extract three paths and add files to cache
             const wcCD = wall.flags.designerdoors.doorIcon.doorClosedPath;
             const wcOD = wall.flags.designerdoors.doorIcon.doorOpenPath;
             const wcLD = wall.flags.designerdoors.doorIcon.doorLockedPath;
