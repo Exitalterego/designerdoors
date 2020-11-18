@@ -9,15 +9,20 @@
 
 Foundry VTT Module For Changing Door Icons
 
+### Key Features
+You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
+
+Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
+
 ### Installation
 Either paste the manifest link below directly into the Module Installer in your Foundry server 'Configuration and Setup' tab, or search for the module listed in the same Module Installer.
 
 ### Compatability
-This module uses a re-write of the *\_getTexture* method from the Door Controller object. This method is, as far as I am aware, only utilised to choose which image to use for your doors.
+This module uses a re-write of the *\_getTexture* method from the Door Controller class. This method is, as far as I am aware, only utilised to choose which image to use for your doors.
 
 As such, there should be no compatability issues unless another module directly tries to change door icons.
 
-If I become aware of any such modules they will be listed here, but at the time of writing there are no known conflicts.
+If I become aware of any such modules they will be listed here.
 
 ### Manifest
 https://raw.githubusercontent.com/Exitalterego/designerdoors/main/module.json
