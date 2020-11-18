@@ -11,9 +11,10 @@ Foundry VTT Module For Changing Door Icons
 
 ### Key Features
 You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
-![DD_default_doors](https://user-images.githubusercontent.com/12241468/99473498-9471d300-2942-11eb-8f7b-b4b4eb7d3605.gif)
+![DD_default_doors](https://user-images.githubusercontent.com/12241468/99480682-7b701e80-2950-11eb-8f95-ff51749174d7.gif)
 
 Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
+![DD_individual_doors](https://user-images.githubusercontent.com/12241468/99480703-86c34a00-2950-11eb-9389-3af05ef9723d.gif)
 
 ### Installation
 Either paste the manifest link below directly into the Module Installer in your Foundry server 'Configuration and Setup' tab, or search for the module listed in the same Module Installer.
@@ -53,8 +54,8 @@ Designer Doors is licensed under the [MIT License](https://github.com/Exitaltere
 
 This work is also licensed under the [FOUNDRY VIRTUAL TABLETOP END USER LICENSE AGREEMENT - May 29, 2020](https://foundryvtt.com/article/license/).
 
-
 ### Credits
-* Logo Font - **Couture** by *Chase Babb*
+* Logo Font - **[Couture](https://www.dafont.com/couture.font)** by *Chase Babb*. Licensed under terms as an open-source project (email confirmation available upon request)
 * Icons - **[game-icons.net](https://game-icons.net/)** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*
 * Module Name - Inspiration kindly provided by *Norc#5108* on the FoundryVTT Discord server
+* Many thanks to *Calego#0914* for pointing me in the right direction on several occasions.
