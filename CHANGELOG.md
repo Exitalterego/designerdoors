@@ -11,17 +11,15 @@
 
 ---
 
-## 0.2.2 - An Actual Fix - Nov 10, 2020
-### New Features
+### 0.2.2 - An Actual Fix - Nov 10, 2020
+#### New Features
 * None
 
-### Bug Fixes
+#### Bug Fixes
 * Module is now listed in Module Manger form correctly.
 
-### Known Issues
+#### Known Issues
 * None
-
----
 
 ### 0.2.1 - The First Patch - Nov 09, 2020
 #### Features
