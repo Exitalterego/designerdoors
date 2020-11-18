@@ -11,6 +11,7 @@ Foundry VTT Module For Changing Door Icons
 
 ### Key Features
 You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
+![DD_default_doors](https://user-images.githubusercontent.com/12241468/99473498-9471d300-2942-11eb-8f7b-b4b4eb7d3605.gif)
 
 Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
 
