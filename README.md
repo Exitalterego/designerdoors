@@ -1,12 +1,16 @@
-![image](https://user-images.githubusercontent.com/12241468/99018302-a4a83d80-2551-11eb-9a4b-32853b7302c2.png)
-### Making better looking doors since 2020
+<div align="center">
+    <br>
+    <img src="https://user-images.githubusercontent.com/12241468/99018302-a4a83d80-2551-11eb-9a4b-32853b7302c2.png" alt="Logo">
+    <br>
+    <h3>Making better looking doors since 2020</h3>
+</div>
 
 <div align="center">
-  ![code style](https://img.shields.io/badge/code%20style-air--bnb-brightgreen?style=flat-square)
-  ![GitHub](https://img.shields.io/github/license/exitalterego/designerdoors?color=bright%20green&style=flat-square)
-  ![GitHub release (latest by date)](https://img.shields.io/github/v/release/exitalterego/designerdoors?color=bright%20green&style=flat-square)
-  [![HitCount](http://hits.dwyl.com/exitalterego/designerdoors.svg)](http://hits.dwyl.com/exitalterego/designerdoors)
-  ![GitHub All Releases](https://img.shields.io/github/downloads/exitalterego/designerdoors/total?color=bright%20green&style=flat-square)
+  <img src="https://img.shields.io/badge/code%20style-air--bnb-brightgreen?style=flat-square" alt="Code Style Badge"></img>
+  <img src="https://img.shields.io/github/license/exitalterego/designerdoors?color=bright%20green&style=flat-square" alt="MIT License Badge"></img>
+  <img src="https://img.shields.io/github/v/release/exitalterego/designerdoors?color=bright%20green&style=flat-square" alt="Release Version Badge"></img>
+  <img src="http://hits.dwyl.com/exitalterego/designerdoors.svg" alt="Hits Badge"></img>
+  <img src="https://img.shields.io/github/downloads/exitalterego/designerdoors/total?color=bright%20green&style=flat-square" alt="Downloads Badge"></img>
 </div>
 
 <div align="center">
