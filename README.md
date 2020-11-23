@@ -19,7 +19,7 @@
     </a>
 </div>
 
-Foundry VTT Module For Changing Door Icons
+___
 
 ### Key Features
 You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
