@@ -7,7 +7,11 @@
 [![HitCount](http://hits.dwyl.com/exitalterego/designerdoors.svg)](http://hits.dwyl.com/exitalterego/designerdoors)
 ![GitHub All Releases](https://img.shields.io/github/downloads/exitalterego/designerdoors/total?color=bright%20green&style=flat-square)
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B62PUPS)
+<div align="center">
+  <a href='https://ko-fi.com/B0B62PUPS' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi2.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+  </a>
+</div>
 
 Foundry VTT Module For Changing Door Icons
 
