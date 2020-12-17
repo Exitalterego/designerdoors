@@ -1,15 +1,25 @@
-## 0.3.0 - The Main Event - Nov 18, 2020
+## 1.0.0 - It's Alive! - Dec 17, 2020
 ### New Features
-* Textures are now cached for all doors on scene change, allowing doors to render without needing state change
+* The supposed caching on scene change in 0.3.0 was, in fact only partial. Now ALL textures (default icons and per door icons) are cached on scene change.
 
 ### Bug Fixes
+* See above. For an as unyet determined reason, default door icons were not being rendered (this did not affect per door icons). By adding a re-caching of these textures on scene change, this problem is now resolved.
+
+### Known Issues
+* No known issues at this time.
+
+---
+
+### 0.3.0 - The Main Event - Nov 18, 2020
+#### New Features
+* Textures are now cached for all doors on scene change, allowing doors to render without needing state change
+
+#### Bug Fixes
 * Fixed textures not caching correctly on submission of settings forms. Previously, forms had to be submitted twice before a texture was recognised.
 * Fixed logic for the selection of default or unique textures per door.
 
-### Known Issues
+#### Known Issues
 * None
-
----
 
 ### 0.2.2 - An Actual Fix - Nov 10, 2020
 #### New Features
