@@ -23,11 +23,11 @@ ___
 
 ### Key Features
 You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
-![DD_default_doors](https://user-images.githubusercontent.com/12241468/99480682-7b701e80-2950-11eb-8f95-ff51749174d7.gif)
+![DD_default_doors](https://user-images.githubusercontent.com/12241468/99480682-7b701e80-2950-11eb-8f95-ff51749174d7.gif)<br>
 This may be useful to create door control icons more appropriate to a given setting or genre of game.
 
 Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
-![DD_individual_doors](https://user-images.githubusercontent.com/12241468/99480703-86c34a00-2950-11eb-9389-3af05ef9723d.gif)
+![DD_individual_doors](https://user-images.githubusercontent.com/12241468/99480703-86c34a00-2950-11eb-9389-3af05ef9723d.gif)<br>
 This allows a GM to either give a particular door unique icons (perhaps a portal or teleporter would have different icons than a normal door), or to change the feel of a particular scene (a dungeon may use different icons than an inn).
 
 ### Installation
