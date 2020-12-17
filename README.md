@@ -24,12 +24,17 @@ ___
 ### Key Features
 You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
 ![DD_default_doors](https://user-images.githubusercontent.com/12241468/99480682-7b701e80-2950-11eb-8f95-ff51749174d7.gif)
+This may be useful to create door control icons more appropriate to a given setting or genre of game.
 
 Each door can also be assigned icons specific to that door only. These are assigned in the the wall control panel.
 ![DD_individual_doors](https://user-images.githubusercontent.com/12241468/99480703-86c34a00-2950-11eb-9389-3af05ef9723d.gif)
+This allows a GM to either give a particular door unique icons (perhaps a portal or teleporter would have different icons than a normal door), or to change the feel of a particular scene (a dungeon may use different icons than an inn).
 
 ### Installation
 Either paste the manifest link below directly into the Module Installer in your Foundry server 'Configuration and Setup' tab, or search for the module listed in the same Module Installer.
+
+### Manifest
+https://raw.githubusercontent.com/Exitalterego/designerdoors/main/module.json
 
 ### Compatability
 This module uses a re-write of the *\_getTexture* method from the Door Controller class. This method is, as far as I am aware, only utilised to choose which image to use for your doors.
@@ -37,9 +42,6 @@ This module uses a re-write of the *\_getTexture* method from the Door Controlle
 As such, there should be no compatability issues unless another module directly tries to change door icons.
 
 If I become aware of any such modules they will be listed here.
-
-### Manifest
-https://raw.githubusercontent.com/Exitalterego/designerdoors/main/module.json
 
 ### Feedback
 I am welcome to constructive feedback, improvement suggestions, additional feature requests and bug reports.
@@ -71,3 +73,4 @@ This work is also licensed under the [FOUNDRY VIRTUAL TABLETOP END USER LICENSE 
 * Icons - **[game-icons.net](https://game-icons.net/)** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*
 * Module Name - Inspiration kindly provided by *Norc#5108* on the FoundryVTT Discord server
 * Many thanks to *Calego#0914* for pointing me in the right direction on several occasions.
+* The League of Extraordinary Foundry VTT Developers Discord server for just generlly being all-round awesome.
