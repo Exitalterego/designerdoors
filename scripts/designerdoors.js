@@ -5,8 +5,49 @@ import { libWrapper } from './shim.js';
 const modName = 'Designer Doors';
 const modId = 'designerdoors';
 
-Hooks.on('setup', () => {
+// Global function to cache default textures
+const cacheTex = ((key) => {
 
+    const defaultPath = game.settings.get(modId, key);
+    TextureLoader.loader.loadTexture(defaultPath);
+
+});
+
+Hooks.on('setup', () => {
+    
+    // Override of the original getTexture method.
+    // Adds additional logic for checking which icon to return
+    async function getTextureOverride() {
+
+        if (this.wall.getFlag(modId, 'doorIcon') === undefined) {
+
+            let s = this.wall.data.ds;
+            const ds = CONST.WALL_DOOR_STATES;
+            if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
+            const textures = {
+                [ds.LOCKED]: game.settings.get(modId, 'doorLockedDefault'),
+                [ds.CLOSED]: game.settings.get(modId, 'doorClosedDefault'),
+                [ds.OPEN]: game.settings.get(modId, 'doorOpenDefault'),
+            };
+            return getTexture(textures[s] || ds.CLOSED);
+
+        }
+        
+        let s = this.wall.data.ds;
+        const ds = CONST.WALL_DOOR_STATES;
+        if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
+        const wallPaths = this.wall.getFlag(modId, 'doorIcon');
+        const textures = {
+            [ds.LOCKED]: wallPaths.doorLockedPath,
+            [ds.CLOSED]: wallPaths.doorClosedPath,
+            [ds.OPEN]: wallPaths.doorOpenPath,
+        };
+        return getTexture(textures[s] || ds.CLOSED);
+
+    }
+
+    libWrapper.register(modId, 'DoorControl.prototype._getTexture', getTextureOverride, 'MIXED');
+    
     console.log(`Loading ${modName} module...`);
 
     // Initialise settings for default icon paths
@@ -43,12 +84,6 @@ Hooks.on('setup', () => {
         type: String,
     });
 
-    const cacheTex = ((key) => {
-
-        const defaultPath = game.settings.get(modId, key);
-        TextureLoader.loader.loadTexture(defaultPath);
-
-    });
 
     // Cache default icons on setup of world
     console.log(`Loading ${modName} default door textures`);
@@ -57,40 +92,9 @@ Hooks.on('setup', () => {
     cacheTex('doorLockedDefault');
     console.log(`${modName} texture loading complete`);
 
-    async function getTextureOverride() {
-
-        if (this.wall.getFlag(modId, 'doorIcon') === undefined) {
-
-            let s = this.wall.data.ds;
-            const ds = CONST.WALL_DOOR_STATES;
-            if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
-            const textures = {
-                [ds.LOCKED]: game.settings.get(modId, 'doorLockedDefault'),
-                [ds.CLOSED]: game.settings.get(modId, 'doorClosedDefault'),
-                [ds.OPEN]: game.settings.get(modId, 'doorOpenDefault'),
-            };
-            return getTexture(textures[s] || ds.CLOSED);
-
-        }
-
-        let s = this.wall.data.ds;
-        const ds = CONST.WALL_DOOR_STATES;
-        if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
-        const wallPaths = this.wall.getFlag(modId, 'doorIcon');
-        const textures = {
-            [ds.LOCKED]: wallPaths.doorLockedPath,
-            [ds.CLOSED]: wallPaths.doorClosedPath,
-            [ds.OPEN]: wallPaths.doorOpenPath,
-        };
-        return getTexture(textures[s] || ds.CLOSED);
-
-    }
-
-    libWrapper.register(modId, 'DoorControl.prototype._getTexture', getTextureOverride, 'MIXED');
-
 });
 
-// Wall Config modifications
+// Wall Config extension. Allows each door to have individual icons
 Hooks.on('renderWallConfig', (app, html, data) => {
 
     // If the wall is not a door, break out of this script.
@@ -194,18 +198,18 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     const form = document.getElementById('wall-config');
     form.addEventListener('submit', (e) => {
 
-        const nameDCP = `flags.${modId}.doorIcon.doorClosedPath`;
-        const nameDOP = `flags.${modId}.doorIcon.doorOpenPath`;
-        const nameDLP = `flags.${modId}.doorIcon.doorLockedPath`;
+        const nameDefCP = `flags.${modId}.doorIcon.doorClosedPath`;
+        const nameDefOP = `flags.${modId}.doorIcon.doorOpenPath`;
+        const nameDefLP = `flags.${modId}.doorIcon.doorLockedPath`;
 
-        const wcDCD = document.getElementsByName(nameDCP)[0].value;
-        const wcDOD = document.getElementsByName(nameDOP)[0].value;
-        const wcDLD = document.getElementsByName(nameDLP)[0].value;
+        const wallConfDCD = document.getElementsByName(nameDefCP)[0].value;
+        const wallConfDOD = document.getElementsByName(nameDefOP)[0].value;
+        const wallConfDLD = document.getElementsByName(nameDefLP)[0].value;
 
         e.preventDefault();
-        TextureLoader.loader.loadTexture(wcDCD);
-        TextureLoader.loader.loadTexture(wcDOD);
-        TextureLoader.loader.loadTexture(wcDLD);
+        TextureLoader.loader.loadTexture(wallConfDCD);
+        TextureLoader.loader.loadTexture(wallConfDOD);
+        TextureLoader.loader.loadTexture(wallConfDLD);
 
     });
 
@@ -214,20 +218,20 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 // Cache default textures on submitting Settings Config
 // Only really needed if default textures are changed, but as I haven't
 // yet figured out how to only run on changes, it will just run on every
-// form submission.
+// submission of the settings form.
 Hooks.on('renderSettingsConfig', () => {
 
     const form = document.getElementById('client-settings');
     form.addEventListener('submit', (e) => {
 
-        const sdCD = document.getElementsByName(`${modId}.doorClosedDefault`);
-        const sdOD = document.getElementsByName(`${modId}.doorOpenDefault`);
-        const sdLD = document.getElementsByName(`${modId}.doorLockedDefault`);
+        const setDefCD = document.getElementsByName(`${modId}.doorClosedDefault`);
+        const setDefOD = document.getElementsByName(`${modId}.doorOpenDefault`);
+        const setDefLD = document.getElementsByName(`${modId}.doorLockedDefault`);
 
         e.preventDefault();
-        TextureLoader.loader.loadTexture(sdCD[0].value);
-        TextureLoader.loader.loadTexture(sdOD[0].value);
-        TextureLoader.loader.loadTexture(sdLD[0].value);
+        TextureLoader.loader.loadTexture(setDefCD[0].value);
+        TextureLoader.loader.loadTexture(setDefOD[0].value);
+        TextureLoader.loader.loadTexture(setDefLD[0].value);
 
     });
 
@@ -258,5 +262,12 @@ Hooks.on('canvasInit', () => {
         }
 
     }
-
+    
+    // Cache default icons on scene change
+    console.log(`Loading ${modName} default door textures`);
+    cacheTex('doorClosedDefault');
+    cacheTex('doorOpenDefault');
+    cacheTex('doorLockedDefault');
+    console.log(`${modName} texture loading complete`);
+    
 });
