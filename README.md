@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/github/license/exitalterego/designerdoors?color=bright%20green&style=flat-square" alt="MIT License Badge"></img>
   <img src="https://img.shields.io/github/v/release/exitalterego/designerdoors?color=bright%20green&style=flat-square" alt="Release Version Badge"></img>
   <img src="http://hits.dwyl.com/exitalterego/designerdoors.svg" alt="Hits Badge"></img>
-  <img src="https://img.shields.io/github/downloads/exitalterego/designerdoors/latest/total?style=flat-square" alt="Latest Release Downloads Badge"></img>
+  <img src="https://img.shields.io/github/downloads/exitalterego/designerdoors/latest/total?color=brightgreen&style=flat-square" alt="Latest Release Downloads Badge"></img>
   <img src="https://img.shields.io/github/downloads/exitalterego/designerdoors/total?color=bright%20green&style=flat-square" alt="Total Downloads Badge"></img>
 </div>
 
