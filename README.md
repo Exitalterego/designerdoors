@@ -70,9 +70,11 @@ Designer Doors is licensed under the [MIT License](https://github.com/Exitaltere
 This work is also licensed under the [FOUNDRY VIRTUAL TABLETOP END USER LICENSE AGREEMENT - May 29, 2020](https://foundryvtt.com/article/license/).
 
 ### Credits
-* shim.js - provided by *Ruipin* and their **[libWrapper module](https://github.com/ruipin/fvtt-lib-wrapper)**
-* Logo Font - **[Couture](https://www.dafont.com/couture.font)** by *Chase Babb*. Licensed under terms as an open-source project (email confirmation available upon request)
-* Icons - **[game-icons.net](https://game-icons.net/)** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*
-* Module Name - Inspiration kindly provided by *Norc#5108* on the FoundryVTT Discord server
-* Many thanks to *Calego#0914* for pointing me in the right direction on several occasions.
-* The League of Extraordinary Foundry VTT Developers Discord server for just generally being all-round awesome.
+<ul>
+  <li>shim.js - provided by *Ruipin* and their **[libWrapper module](https://github.com/ruipin/fvtt-lib-wrapper)**.</li>
+  <li>Logo Font - **[Couture](https://www.dafont.com/couture.font)** by *Chase Babb*. Licensed under terms as an open-source project (email confirmation available upon request).</li>
+  <li>Icons - **[game-icons.net](https://game-icons.net/)** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*.</li>
+  <li>Module Name - Inspiration kindly provided by *Norc#5108* on the FoundryVTT Discord server.</li>
+  <li>Many thanks to *Calego#0914* for pointing me in the right direction on several occasions.</li>
+  <li>The League of Extraordinary Foundry VTT Developers Discord server for just generally being all-round awesome.</li>
+</ul>
