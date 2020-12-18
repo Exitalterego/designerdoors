@@ -10,7 +10,8 @@
   <img src="https://img.shields.io/github/license/exitalterego/designerdoors?color=bright%20green&style=flat-square" alt="MIT License Badge"></img>
   <img src="https://img.shields.io/github/v/release/exitalterego/designerdoors?color=bright%20green&style=flat-square" alt="Release Version Badge"></img>
   <img src="http://hits.dwyl.com/exitalterego/designerdoors.svg" alt="Hits Badge"></img>
-  <img src="https://img.shields.io/github/downloads/exitalterego/designerdoors/total?color=bright%20green&style=flat-square" alt="Downloads Badge"></img>
+  <img src="https://img.shields.io/github/downloads/exitalterego/designerdoors/latest/total?style=flat-square" alt="Latest Release Downloads Badge"></img>
+  <img src="https://img.shields.io/github/downloads/exitalterego/designerdoors/total?color=bright%20green&style=flat-square" alt="Total Downloads Badge"></img>
 </div>
 
 <div align="center">
@@ -69,9 +70,9 @@ Designer Doors is licensed under the [MIT License](https://github.com/Exitaltere
 This work is also licensed under the [FOUNDRY VIRTUAL TABLETOP END USER LICENSE AGREEMENT - May 29, 2020](https://foundryvtt.com/article/license/).
 
 ### Credits
-* shim.js - provided by *Ruipin* and their *[libWrapper module](https://github.com/ruipin/fvtt-lib-wrapper)*
+* shim.js - provided by *Ruipin* and their **[libWrapper module](https://github.com/ruipin/fvtt-lib-wrapper)**
 * Logo Font - **[Couture](https://www.dafont.com/couture.font)** by *Chase Babb*. Licensed under terms as an open-source project (email confirmation available upon request)
 * Icons - **[game-icons.net](https://game-icons.net/)** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*
 * Module Name - Inspiration kindly provided by *Norc#5108* on the FoundryVTT Discord server
 * Many thanks to *Calego#0914* for pointing me in the right direction on several occasions.
-* The League of Extraordinary Foundry VTT Developers Discord server for just generlly being all-round awesome.
+* The League of Extraordinary Foundry VTT Developers Discord server for just generally being all-round awesome.
