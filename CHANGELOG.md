@@ -1,14 +1,25 @@
-## 1.0.0 - It's Alive! - Dec 17, 2020
+## 1.0.1 - Spring Cleaning - Feb 10, 2021
 ### New Features
-* The supposed caching on scene change in 0.3.0 was, in fact only partial. Now ALL textures (default icons and per door icons) are cached on scene change.
+* None
 
 ### Bug Fixes
-* See above. For an as unyet determined reason, default door icons were not being rendered (this did not affect per door icons). By adding a re-caching of these textures on scene change, this problem is now resolved.
+* Primarily a house keeping update, fixing some stuff in the text formatting of the ReadMe and links in the module.json
+* Some slight refactoring of code to bring it up to a slightly more dev-friendly standard. This is a work in progress, and is likely to see more improvements in future updates.
 
 ### Known Issues
-* No known issues at this time.
+* None, but I am aware of the existence of Smart Doors. Currently there is no overlap in functionality and no incompatabilities. Should any arise, I shall see what can be done about them
 
 ---
+
+### 1.0.0 - It's Alive! - Dec 17, 2020
+#### New Features
+* The supposed caching on scene change in 0.3.0 was, in fact only partial. Now ALL textures (default icons and per door icons) are cached on scene change.
+
+#### Bug Fixes
+* See above. For an as unyet determined reason, default door icons were not being rendered (this did not affect per door icons). By adding a re-caching of these textures on scene change, this problem is now resolved.
+
+#### Known Issues
+* No known issues at this time.
 
 ### 0.3.0 - The Main Event - Nov 18, 2020
 #### New Features
