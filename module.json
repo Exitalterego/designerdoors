@@ -14,10 +14,21 @@
     "compatibleCoreVersion": "0.7.9",
     "type": "module",
     "author": "Exitalterego",
+    "manifestPlusVersion": "1.0.0",
     "authors": [
         {
             "name": "Exitalterego",
             "discord": "Exitalterego#8315"
+        }
+    ],
+    "media": [
+        {
+            "type": "icon",
+            "url": "https://user-images.githubusercontent.com/12241468/107601883-d186f200-6c1f-11eb-87ca-7892c3a5ba6a.jpg"
+        },
+        {
+            "type": "cover",
+            "url": "https://user-images.githubusercontent.com/12241468/107601864-c3d16c80-6c1f-11eb-97b7-025be8337789.jpg"
         }
     ],
     "readme": "https://github.com/Exitalterego/designerdoors/blob/main/README.md",
