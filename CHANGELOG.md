@@ -7,7 +7,7 @@
 * Some slight refactoring of code to bring it up to a slightly more dev-friendly standard. This is a work in progress, and is likely to see more improvements in future updates.
 
 ### Known Issues
-* None, but I am aware of the existence of Smart Doors. Currently there is no overlap in functionality and no incompatabilities. Should any arise, I shall see what can be done about them
+* None, but I am aware of the existence of Smart Doors. Currently, there is no overlap in functionality and I don't believe there to be any  incompatibilities. Should any arise, I shall see what can be done about them.
 
 ---
 
