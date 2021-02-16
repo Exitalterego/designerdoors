@@ -31,6 +31,7 @@
             "url": "https://user-images.githubusercontent.com/12241468/107601864-c3d16c80-6c1f-11eb-97b7-025be8337789.jpg"
         }
     ],
+    "allowBugReporter": true,
     "readme": "https://github.com/Exitalterego/designerdoors/blob/main/README.md",
     "bugs": "https://www.github.com/exitalterego/designerdoors/issues",
     "license": "https://github.com/Exitalterego/designerdoors/blob/main/LICENSE",
