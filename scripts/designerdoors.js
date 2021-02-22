@@ -111,7 +111,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 
     // If the wall is a door, extend the size of the wall config form
     app.setPosition({
-        height: 700,
+        height: "auto",
         width: 400,
     });
 
