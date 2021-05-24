@@ -185,14 +185,12 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     html.find('.form-group').last().after(message);
 
     // File Picker buttons
-    const button1 = html.find(`button[data-target="flags.${modId}.doorIcon.doorClosedPath"]`)[0];
-    const button2 = html.find(`button[data-target="flags.${modId}.doorIcon.doorOpenPath"]`)[0];
-    const button3 = html.find(`button[data-target="flags.${modId}.doorIcon.doorLockedPath"]`)[0];
-
-    app._activateFilePicker(button1);
-    app._activateFilePicker(button2);
-    app._activateFilePicker(button3);
-
+    
+    // Is it possible that this may cause conflicts with other modules that add file picker buttons? To be tested.
+    // May need mod specific CSS class for file picker button - ddfile-picker?
+    
+    html.find('button.file-picker').on('click', app._activateFilePicker.bind(app));
+    
     // On submitting the Wall Config form, requested textures are added to the cache
 
     const form = document.getElementById('wall-config');
