@@ -60,6 +60,7 @@ Hooks.on('setup', () => {
         config: true,
         default: `modules/${modId}/icons/door-steel.svg`,
         type: String,
+        filePicker: true,
     });
 
     // Open door default icon
@@ -71,6 +72,7 @@ Hooks.on('setup', () => {
         config: true,
         default: `modules/${modId}/icons/door-exit.svg`,
         type: String,
+        filePicker: true,
     });
 
     // Locked door default icon
@@ -82,6 +84,7 @@ Hooks.on('setup', () => {
         config: true,
         default: `modules/${modId}/icons/padlock.svg`,
         type: String,
+        filePicker: true,
     });
 
 
