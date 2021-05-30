@@ -19,32 +19,37 @@ Hooks.on('setup', () => {
     // Adds additional logic for checking which icon to return
     async function getTextureOverride() {
 
-        if (this.wall.getFlag(modId, 'doorIcon') === undefined) {
-
-            let s = this.wall.data.ds;
-            const ds = CONST.WALL_DOOR_STATES;
-            if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
-            const textures = {
-                [ds.LOCKED]: game.settings.get(modId, 'doorLockedDefault'),
+        // Determine door state
+        const ds = CONST.WALL_DOOR_STATES;
+        let s = this.wall.data.ds;  
+        if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
+        
+        if (this.wall.document.getFlag(modId, 'doorIcon') === undefined) {
+            // Determine texture to render on unflagged wall
+            let path = {
                 [ds.CLOSED]: game.settings.get(modId, 'doorClosedDefault'),
                 [ds.OPEN]: game.settings.get(modId, 'doorOpenDefault'),
-            };
-            return getTexture(textures[s] || ds.CLOSED);
-
+                [ds.LOCKED]: game.settings.get(modId, 'doorLockedDefault'),
+            }[s] || game.settings.get(modId, 'doorClosedDefault');
+            if ( (s === ds.CLOSED) && (this.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET) ) path = icons.doorSecret;
+            
+            // Obtain icon texture
+            return getTexture(path);
         }
         
-        let s = this.wall.data.ds;
-        const ds = CONST.WALL_DOOR_STATES;
-        if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
-        const wallPaths = this.wall.getFlag(modId, 'doorIcon');
-        const textures = {
+        const wallPaths = this.wall.document.getFlag(modId, 'doorIcon');
+        // Determine texture to render on flagged wall
+        const path = {
             [ds.LOCKED]: wallPaths.doorLockedPath,
             [ds.CLOSED]: wallPaths.doorClosedPath,
             [ds.OPEN]: wallPaths.doorOpenPath,
-        };
-        return getTexture(textures[s] || ds.CLOSED);
+        }[s] || wallPaths.doorClosedPath;
+        if ( (s === ds.CLOSED) && (this.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET) ) path = icons.doorSecret;
+        
+        // Obtain icon texture
+        return getTexture(path);
 
-    }
+    };
 
     libWrapper.register(modId, 'DoorControl.prototype._getTexture', getTextureOverride, 'MIXED');
     
