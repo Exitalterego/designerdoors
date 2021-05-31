@@ -230,14 +230,14 @@ Hooks.on('renderSettingsConfig', () => {
     const form = document.getElementById('client-settings');
     form.addEventListener('submit', (e) => {
 
-        const setDefCD = document.getElementsByName(`${modId}.doorClosedDefault`);
-        const setDefOD = document.getElementsByName(`${modId}.doorOpenDefault`);
-        const setDefLD = document.getElementsByName(`${modId}.doorLockedDefault`);
+        const defaultClosedDoor = document.getElementsByName(`${modId}.doorClosedDefault`);
+        const defaultOpenDoor = document.getElementsByName(`${modId}.doorOpenDefault`);
+        const defaultLockedDoor = document.getElementsByName(`${modId}.doorLockedDefault`);
 
         e.preventDefault();
-        TextureLoader.loader.loadTexture(setDefCD[0].value);
-        TextureLoader.loader.loadTexture(setDefOD[0].value);
-        TextureLoader.loader.loadTexture(setDefLD[0].value);
+        TextureLoader.loader.loadTexture(defaultClosedDoor[0].value);
+        TextureLoader.loader.loadTexture(defaultOpenDoor[0].value);
+        TextureLoader.loader.loadTexture(defaultLockedDoor[0].value);
 
     });
 
