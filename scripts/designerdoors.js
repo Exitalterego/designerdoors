@@ -248,27 +248,18 @@ Hooks.on('canvasInit', () => {
 
     // List of all walls in scene
     const sceneWalls = game.scenes.viewed.data.walls;
-
-    for (let i = 0; i < sceneWalls.length; i++) {
-
-        // Check wall for designerdoors flag
-        if (modId in sceneWalls[i].flags) {
-
-            const wall = sceneWalls[i];
-
-            // If flag found, extract three paths and add files to cache
-            const wcCD = wall.flags.designerdoors.doorIcon.doorClosedPath;
-            const wcOD = wall.flags.designerdoors.doorIcon.doorOpenPath;
-            const wcLD = wall.flags.designerdoors.doorIcon.doorLockedPath;
-
-            TextureLoader.loader.loadTexture(wcCD);
-            TextureLoader.loader.loadTexture(wcOD);
-            TextureLoader.loader.loadTexture(wcLD);
-
-        }
-
-    }
     
+    // Scan walls for DD flags
+    for (let wall of sceneWalls){
+        if (wall.getFlag(modId, 'doorIcon')) {
+            // Cycle through flag paths and submit to cache
+            const pathsArray = Object.values(wall.getFlag(modId, 'doorIcon'));
+            for (let path of pathsArray){
+                TextureLoader.loader.loadImageTexture(path);
+            };
+        }
+    };
+ 
     // Cache default icons on scene change
     console.log(`Loading ${modName} default door textures`);
     cacheTex('doorClosedDefault');
