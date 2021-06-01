@@ -17,7 +17,7 @@ Hooks.on('setup', () => {
     
     // Override of the original getTexture method.
     // Adds additional logic for checking which icon to return
-    async function getTextureOverride() {
+    function getTextureOverride() {
 
         // Determine door state
         const ds = CONST.WALL_DOOR_STATES;
