@@ -24,34 +24,28 @@ Hooks.on('setup', () => {
         let s = this.wall.data.ds;  
         if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
         
-        if (this.wall.document.getFlag(modId, 'doorIcon') === undefined) {
-            // Determine texture to render on unflagged wall
-            let path = {
-                [ds.CLOSED]: game.settings.get(modId, 'doorClosedDefault'),
-                [ds.OPEN]: game.settings.get(modId, 'doorOpenDefault'),
-                [ds.LOCKED]: game.settings.get(modId, 'doorLockedDefault'),
-            }[s] || game.settings.get(modId, 'doorClosedDefault');
-            if ( (s === ds.CLOSED) && (this.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET) ) path = icons.doorSecret;
-            
-            // Obtain icon texture
-            return getTexture(path);
+        const wallPaths = this.wall.document.getFlag(modId, "doorIcon");
+        
+        let path;
+        if (s === ds.CLOSED && this.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET) {
+            path = icons.doorSecret;
+        } else {
+            // Determine texture to render
+            if (s === ds.CLOSED) {
+                path = wallPaths?.doorClosedPath ?? game.settings.get(modId, "doorClosedDefault");
+        } else if (s === ds.OPEN) { 
+                path = wallPaths?.doorOpenPath ?? game.settings.get(modId, "doorOpenDefault");
+        } else if (s === ds.LOCKED) {
+                path = wallPaths?.doorLockedPath ?? game.settings.get(modId, "doorLockedDefault");
         }
-        
-        const wallPaths = this.wall.document.getFlag(modId, 'doorIcon');
-        // Determine texture to render on flagged wall
-        const path = {
-            [ds.LOCKED]: wallPaths.doorLockedPath,
-            [ds.CLOSED]: wallPaths.doorClosedPath,
-            [ds.OPEN]: wallPaths.doorOpenPath,
-        }[s] || wallPaths.doorClosedPath;
-        if ( (s === ds.CLOSED) && (this.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET) ) path = icons.doorSecret;
-        
-        // Obtain icon texture
+
+        path ??= wallPaths?.doorClosedPath ?? game.settings.get(modId, "doorClosedDefault");
+        }
+
         return getTexture(path);
+    }
 
-    };
-
-    libWrapper.register(modId, 'DoorControl.prototype._getTexture', getTextureOverride, 'MIXED');
+    libWrapper.register( modId, "DoorControl.prototype._getTexture", getTextureOverride, "OVERRIDE");
     
     console.log(`Loading ${modName} module...`);
 
