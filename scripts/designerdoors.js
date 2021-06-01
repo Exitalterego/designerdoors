@@ -203,19 +203,15 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 
     const form = document.getElementById('wall-config');
     form.addEventListener('submit', (e) => {
-
-        const nameDefCP = `flags.${modId}.doorIcon.doorClosedPath`;
-        const nameDefOP = `flags.${modId}.doorIcon.doorOpenPath`;
-        const nameDefLP = `flags.${modId}.doorIcon.doorLockedPath`;
-
-        const wallConfDCD = document.getElementsByName(nameDefCP)[0].value;
-        const wallConfDOD = document.getElementsByName(nameDefOP)[0].value;
-        const wallConfDLD = document.getElementsByName(nameDefLP)[0].value;
-
-        e.preventDefault();
-        TextureLoader.loader.loadTexture(wallConfDCD);
-        TextureLoader.loader.loadTexture(wallConfDOD);
-        TextureLoader.loader.loadTexture(wallConfDLD);
+        
+        const doorStates = ["doorClosedPath","doorOpenPath","doorLockedPath"];
+        
+        for (let state of doorStates) {
+            const defaultPath = `flags.${modId}.doorIcon.${state}`
+            const formValue = document.getElementsByName(defaultPath)[0].value;
+            e.preventDefault();
+            TextureLoader.loader.loadImageTexture(formValue);
+        };
 
     });
 
