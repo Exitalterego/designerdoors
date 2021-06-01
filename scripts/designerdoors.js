@@ -226,14 +226,13 @@ Hooks.on('renderSettingsConfig', () => {
     const form = document.getElementById('client-settings');
     form.addEventListener('submit', (e) => {
 
-        const defaultClosedDoor = document.getElementsByName(`${modId}.doorClosedDefault`);
-        const defaultOpenDoor = document.getElementsByName(`${modId}.doorOpenDefault`);
-        const defaultLockedDoor = document.getElementsByName(`${modId}.doorLockedDefault`);
-
-        e.preventDefault();
-        TextureLoader.loader.loadTexture(defaultClosedDoor[0].value);
-        TextureLoader.loader.loadTexture(defaultOpenDoor[0].value);
-        TextureLoader.loader.loadTexture(defaultLockedDoor[0].value);
+        const doorStates = ["doorClosedDefault","doorOpenDefault","doorLockedDefault"];
+        
+        for (let state of doorStates) {
+            const path = document.getElementsByName(`${modId}.${state}`)[0].value;
+            e.preventDefault();
+            TextureLoader.loader.loadImageTexture(path);
+        };
 
     });
 
