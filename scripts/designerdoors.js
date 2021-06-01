@@ -204,13 +204,15 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     const form = document.getElementById('wall-config');
     form.addEventListener('submit', (e) => {
         
+        // Door state keys used to define HTML element names
         const doorStates = ["doorClosedPath","doorOpenPath","doorLockedPath"];
         
+        // Loop through states, caching textures from provided paths
         for (let state of doorStates) {
-            const defaultPath = `flags.${modId}.doorIcon.${state}`
-            const formValue = document.getElementsByName(defaultPath)[0].value;
+            const elementName = `flags.${modId}.doorIcon.${state}`
+            const path = document.getElementsByName(elementName)[0].value;
             e.preventDefault();
-            TextureLoader.loader.loadImageTexture(formValue);
+            TextureLoader.loader.loadImageTexture(path);
         };
 
     });
@@ -226,8 +228,10 @@ Hooks.on('renderSettingsConfig', () => {
     const form = document.getElementById('client-settings');
     form.addEventListener('submit', (e) => {
 
+        // Door state keys used in game settings
         const doorStates = ["doorClosedDefault","doorOpenDefault","doorLockedDefault"];
         
+        // Loop through states, caching textures from provided paths
         for (let state of doorStates) {
             const path = document.getElementsByName(`${modId}.${state}`)[0].value;
             e.preventDefault();
