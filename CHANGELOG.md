@@ -2,7 +2,7 @@
 ### New Features
 * Designer Doors is now compatible with Foundry 0.8.6!
 * Default icons can now be chosen with the Foundry file picker.
-* Added compatibility with Foundrys secret doors. A default icon can be chosen for these in the module settings. As these icons are only visible to the GM, custom icons per door have not been added.
+* Added compatibility with Foundry's secret doors. A default icon can be chosen for these in the module settings. As these icons are only visible to the GM, custom icons per door have not been added.
 * Code has been cleaned up somewhat, making future maintenance easier. This is a work in progress though and future updates will likely continue this
 
 ### Bug Fixes
