@@ -17,38 +17,37 @@ Hooks.on('setup', () => {
     
     // Override of the original getTexture method.
     // Adds additional logic for checking which icon to return
-    async function getTextureOverride() {
+    function getTextureOverride() {
 
-        if (this.wall.getFlag(modId, 'doorIcon') === undefined) {
-
-            let s = this.wall.data.ds;
-            const ds = CONST.WALL_DOOR_STATES;
-            if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
-            const textures = {
-                [ds.LOCKED]: game.settings.get(modId, 'doorLockedDefault'),
-                [ds.CLOSED]: game.settings.get(modId, 'doorClosedDefault'),
-                [ds.OPEN]: game.settings.get(modId, 'doorOpenDefault'),
-            };
-            return getTexture(textures[s] || ds.CLOSED);
-
-        }
-        
-        let s = this.wall.data.ds;
+        // Determine door state
         const ds = CONST.WALL_DOOR_STATES;
-        if (!game.user.isGM && s === ds.LOCKED) s = ds.CLOSED;
-        const wallPaths = this.wall.getFlag(modId, 'doorIcon');
-        const textures = {
-            [ds.LOCKED]: wallPaths.doorLockedPath,
-            [ds.CLOSED]: wallPaths.doorClosedPath,
-            [ds.OPEN]: wallPaths.doorOpenPath,
-        };
-        return getTexture(textures[s] || ds.CLOSED);
+        let s = this.wall.data.ds;  
+        if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
+        
+        const wallPaths = this.wall.document.getFlag(modId, "doorIcon");
+        
+        let path;
+        if (s === ds.CLOSED && this.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET) {
+            path = game.settings.get(modId, 'doorSecretDefault');
+        } else {
+            // Determine texture to render
+            if (s === ds.CLOSED) {
+                path = wallPaths?.doorClosedPath ?? game.settings.get(modId, "doorClosedDefault");
+        } else if (s === ds.OPEN) { 
+                path = wallPaths?.doorOpenPath ?? game.settings.get(modId, "doorOpenDefault");
+        } else if (s === ds.LOCKED) {
+                path = wallPaths?.doorLockedPath ?? game.settings.get(modId, "doorLockedDefault");
+        }
 
+        path ??= wallPaths?.doorClosedPath ?? game.settings.get(modId, "doorClosedDefault");
+        }
+
+        return getTexture(path);
     }
-
-    libWrapper.register(modId, 'DoorControl.prototype._getTexture', getTextureOverride, 'MIXED');
+        
+    libWrapper.register( modId, 'DoorControl.prototype._getTexture', getTextureOverride, 'OVERRIDE');
     
-    console.log(`Loading ${modName} module...`);
+    console.log('Loading Designer Doors module...');
 
     // Initialise settings for default icon paths
     // Closed door default icon
@@ -60,6 +59,7 @@ Hooks.on('setup', () => {
         config: true,
         default: `modules/${modId}/icons/door-steel.svg`,
         type: String,
+        filePicker: true,
     });
 
     // Open door default icon
@@ -71,6 +71,7 @@ Hooks.on('setup', () => {
         config: true,
         default: `modules/${modId}/icons/door-exit.svg`,
         type: String,
+        filePicker: true,
     });
 
     // Locked door default icon
@@ -82,6 +83,18 @@ Hooks.on('setup', () => {
         config: true,
         default: `modules/${modId}/icons/padlock.svg`,
         type: String,
+        filePicker: true,
+    });
+        
+    // Secret door default icon
+    game.settings.register(modId, 'doorSecretDefault', {
+        name: 'Secret Door',
+        hint: 'The default icon for a secret door',
+        scope: 'world',
+        config: true,
+        default: `modules/${modId}/icons/mute.svg`,
+        type: String,
+        filePicker: true,
     });
 
 
@@ -90,7 +103,10 @@ Hooks.on('setup', () => {
     cacheTex('doorClosedDefault');
     cacheTex('doorOpenDefault');
     cacheTex('doorLockedDefault');
+    cacheTex('doorSecretDefault');
     console.log(`${modName} texture loading complete`);
+    
+
 
 });
 
@@ -111,7 +127,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 
     // If the wall is a door, extend the size of the wall config form
     app.setPosition({
-        height: 700,
+        height: "auto",
         width: 400,
     });
 
@@ -185,31 +201,27 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     html.find('.form-group').last().after(message);
 
     // File Picker buttons
-    const button1 = html.find(`button[data-target="flags.${modId}.doorIcon.doorClosedPath"]`)[0];
-    const button2 = html.find(`button[data-target="flags.${modId}.doorIcon.doorOpenPath"]`)[0];
-    const button3 = html.find(`button[data-target="flags.${modId}.doorIcon.doorLockedPath"]`)[0];
-
-    app._activateFilePicker(button1);
-    app._activateFilePicker(button2);
-    app._activateFilePicker(button3);
-
+    
+    // Is it possible that this may cause conflicts with other modules that add file picker buttons? To be tested.
+    // May need mod specific CSS class for file picker button - ddfile-picker?
+    
+    html.find('button.file-picker').on('click', app._activateFilePicker.bind(app));
+    
     // On submitting the Wall Config form, requested textures are added to the cache
 
     const form = document.getElementById('wall-config');
     form.addEventListener('submit', (e) => {
-
-        const nameDefCP = `flags.${modId}.doorIcon.doorClosedPath`;
-        const nameDefOP = `flags.${modId}.doorIcon.doorOpenPath`;
-        const nameDefLP = `flags.${modId}.doorIcon.doorLockedPath`;
-
-        const wallConfDCD = document.getElementsByName(nameDefCP)[0].value;
-        const wallConfDOD = document.getElementsByName(nameDefOP)[0].value;
-        const wallConfDLD = document.getElementsByName(nameDefLP)[0].value;
-
-        e.preventDefault();
-        TextureLoader.loader.loadTexture(wallConfDCD);
-        TextureLoader.loader.loadTexture(wallConfDOD);
-        TextureLoader.loader.loadTexture(wallConfDLD);
+        
+        // Door state keys used to define HTML element names
+        const doorStates = ['doorClosedPath','doorOpenPath','doorLockedPath'];
+        
+        // Loop through states, caching textures from provided paths
+        for (let state of doorStates) {
+            const elementName = `flags.${modId}.doorIcon.${state}`
+            const path = document.getElementsByName(elementName)[0].value;
+            e.preventDefault();
+            TextureLoader.loader.loadImageTexture(path);
+        };
 
     });
 
@@ -224,14 +236,15 @@ Hooks.on('renderSettingsConfig', () => {
     const form = document.getElementById('client-settings');
     form.addEventListener('submit', (e) => {
 
-        const setDefCD = document.getElementsByName(`${modId}.doorClosedDefault`);
-        const setDefOD = document.getElementsByName(`${modId}.doorOpenDefault`);
-        const setDefLD = document.getElementsByName(`${modId}.doorLockedDefault`);
-
-        e.preventDefault();
-        TextureLoader.loader.loadTexture(setDefCD[0].value);
-        TextureLoader.loader.loadTexture(setDefOD[0].value);
-        TextureLoader.loader.loadTexture(setDefLD[0].value);
+        // Door state keys used in game settings
+        const doorStates = ['doorClosedDefault','doorOpenDefault','doorLockedDefault','doorSecretDefault'];
+        
+        // Loop through states, caching textures from provided paths
+        for (let state of doorStates) {
+            const path = document.getElementsByName(`${modId}.${state}`)[0].value;
+            e.preventDefault();
+            TextureLoader.loader.loadImageTexture(path);
+        };
 
     });
 
@@ -242,32 +255,24 @@ Hooks.on('canvasInit', () => {
 
     // List of all walls in scene
     const sceneWalls = game.scenes.viewed.data.walls;
-
-    for (let i = 0; i < sceneWalls.length; i++) {
-
-        // Check wall for designerdoors flag
-        if (modId in sceneWalls[i].flags) {
-
-            const wall = sceneWalls[i];
-
-            // If flag found, extract three paths and add files to cache
-            const wcCD = wall.flags.designerdoors.doorIcon.doorClosedPath;
-            const wcOD = wall.flags.designerdoors.doorIcon.doorOpenPath;
-            const wcLD = wall.flags.designerdoors.doorIcon.doorLockedPath;
-
-            TextureLoader.loader.loadTexture(wcCD);
-            TextureLoader.loader.loadTexture(wcOD);
-            TextureLoader.loader.loadTexture(wcLD);
-
-        }
-
-    }
     
+    // Scan walls for DD flags
+    for (let wall of sceneWalls){
+        if (wall.getFlag(modId, 'doorIcon')) {
+            // Cycle through flag paths and submit to cache
+            const pathsArray = Object.values(wall.getFlag(modId, 'doorIcon'));
+            for (let path of pathsArray){
+                TextureLoader.loader.loadImageTexture(path);
+            };
+        }
+    };
+ 
     // Cache default icons on scene change
     console.log(`Loading ${modName} default door textures`);
     cacheTex('doorClosedDefault');
     cacheTex('doorOpenDefault');
     cacheTex('doorLockedDefault');
+    cacheTex('doorSecretDefault');
     console.log(`${modName} texture loading complete`);
     
 });

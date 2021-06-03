@@ -9,7 +9,6 @@
   <img src="https://img.shields.io/badge/code%20style-air--bnb-brightgreen?style=flat-square" alt="Code Style Badge"></img>
   <img src="https://img.shields.io/github/license/exitalterego/designerdoors?color=bright%20green&style=flat-square" alt="MIT License Badge"></img>
   <img src="https://img.shields.io/github/v/release/exitalterego/designerdoors?color=bright%20green&style=flat-square" alt="Release Version Badge"></img>
-  <img src="http://hits.dwyl.com/exitalterego/designerdoors.svg" alt="Hits Badge"></img>
   <img src="https://img.shields.io/github/downloads/exitalterego/designerdoors/latest/total?color=brightgreen&style=flat-square" alt="Latest Release Downloads Badge"></img>
   <img src="https://img.shields.io/github/downloads/exitalterego/designerdoors/total?color=bright%20green&style=flat-square" alt="Total Downloads Badge"></img>
   <img src="https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Fdesignerdoors&color=bright%20green&style=flat-square" alt="Forge Installs"></img>
@@ -24,7 +23,7 @@
 ___
 
 ### Key Features
-You can change the default door icons used to show closed, open and locked doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
+You can change the default door icons used to show closed, open and locked doors and set an icon to represent secret doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
 ![DD_default_doors](https://user-images.githubusercontent.com/12241468/99480682-7b701e80-2950-11eb-8f95-ff51749174d7.gif)<br>
 This may be useful to create door control icons more appropriate to a given setting or genre of game.
 
@@ -39,7 +38,7 @@ Either paste the manifest link below directly into the Module Installer in your 
 https://raw.githubusercontent.com/Exitalterego/designerdoors/main/module.json
 
 ### Compatability
-This module uses a re-write of the *\_getTexture* method from the Door Controller class. This method is, as far as I am aware, only utilised to choose which image to use for your doors.
+This module uses a re-write of the *\_getTexture* method from the Door Controller class. This method is, as far as I am aware, only utilised to choose which image to use for your door controls.
 
 As such, there should be no compatability issues unless another module directly tries to change door icons.
 
@@ -74,6 +73,6 @@ This work is also licensed under the [FOUNDRY VIRTUAL TABLETOP END USER LICENSE 
  *  Logo Font - **[Couture](https://www.dafont.com/couture.font)** by *Chase Babb*. Licensed under terms as an open-source project (email confirmation available upon request).
  *  Icons - **[game-icons.net](https://game-icons.net/)** licensed under *[CC-BY-3.0](https://creativecommons.org/licenses/by/3.0/)*.
  *  Module Name - Inspiration kindly provided by *Norc#5108* on the FoundryVTT Discord server.
- *  Many thanks to *Calego#0914* for pointing me in the right direction on several occasions.
+ *  Many thanks to *Calego#0914* for pointing me in the right direction on several occasions and to *LukeAbby#0001* for acting as a rubber duck and pointing out that one errant async.
  *  The League of Extraordinary Foundry VTT Developers Discord server for just generally being all-round awesome.
 

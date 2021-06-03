@@ -1,12 +1,28 @@
-## 1.0.1 - Spring Cleaning - Feb 10, 2021
+## 2.0.0 - Foundryversary Edition - Jun 03, 2021
 ### New Features
-* None
+* Designer Doors is now compatible with Foundry 0.8.6!
+* Default icons can now be chosen with the Foundry file picker.
+* Added compatibility with Foundrys secret doors. A default icon can be chosen for these in the module settings. As these icons are only visible to the GM, custom icons per door have not been added.
+* Code has been cleaned up somewhat, making future maintenance easier. This is a work in progress though and future updates will likely continue this
 
 ### Bug Fixes
+* None
+
+### Known Issues
+* As this module has been changed to be compatible with Foundry 0.8.6, this version is specifically NOT backwards compatible with earlier Foundry versions. Some of the code clean-up may make it into an update of Designer Doors 1.x.x versions, but features will not.
+* I have not encountered any major issues during testing, but I have not tested this against other modules. If any issues or incompatibilities arise, please report them via the modules Github page.
+
+---
+
+### 1.0.1 - Spring Cleaning - Feb 10, 2021
+#### New Features
+* None
+
+#### Bug Fixes
 * Primarily a house keeping update, fixing some stuff in the text formatting of the ReadMe and links in the module.json
 * Some slight refactoring of code to bring it up to a slightly more dev-friendly standard. This is a work in progress, and is likely to see more improvements in future updates.
 
-### Known Issues
+#### Known Issues
 * None, but I am aware of the existence of Smart Doors. Currently, there is no overlap in functionality and I don't believe there to be any  incompatibilities. Should any arise, I shall see what can be done about them.
 
 ---
