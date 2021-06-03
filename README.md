@@ -23,8 +23,7 @@
 ___
 
 ### Key Features
-You can change the default door icons used to show closed, open and locked doors and set an icon to represent secret doors. 
-These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
+You can change the default door icons used to show closed, open and locked doors and set an icon to represent secret doors. These are set through the module settings panel and will be applied to all doors that DO NOT have their own custom icons.
 ![DD_default_doors](https://user-images.githubusercontent.com/12241468/99480682-7b701e80-2950-11eb-8f95-ff51749174d7.gif)<br>
 This may be useful to create door control icons more appropriate to a given setting or genre of game.
 
