@@ -28,7 +28,7 @@ Hooks.on('setup', () => {
         
         let path;
         if (s === ds.CLOSED && this.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET) {
-            path = icons.doorSecret;
+            path = game.settings.get(modId, 'doorSecretDefault');
         } else {
             // Determine texture to render
             if (s === ds.CLOSED) {
@@ -44,10 +44,10 @@ Hooks.on('setup', () => {
 
         return getTexture(path);
     }
-
-    libWrapper.register( modId, "DoorControl.prototype._getTexture", getTextureOverride, "OVERRIDE");
+        
+    libWrapper.register( modId, 'DoorControl.prototype._getTexture', getTextureOverride, 'OVERRIDE');
     
-    console.log(`Loading ${modName} module...`);
+    console.log('Loading Designer Doors module...');
 
     // Initialise settings for default icon paths
     // Closed door default icon
@@ -85,6 +85,17 @@ Hooks.on('setup', () => {
         type: String,
         filePicker: true,
     });
+        
+    // Secret door default icon
+    game.settings.register(modId, 'doorSecretDefault', {
+        name: 'Secret Door',
+        hint: 'The default icon for a secret door',
+        scope: 'world',
+        config: true,
+        default: `modules/${modId}/icons/mute.svg`,
+        type: String,
+        filePicker: true,
+    });
 
 
     // Cache default icons on setup of world
@@ -92,7 +103,10 @@ Hooks.on('setup', () => {
     cacheTex('doorClosedDefault');
     cacheTex('doorOpenDefault');
     cacheTex('doorLockedDefault');
+    cacheTex('doorSecretDefault');
     console.log(`${modName} texture loading complete`);
+    
+
 
 });
 
@@ -199,7 +213,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     form.addEventListener('submit', (e) => {
         
         // Door state keys used to define HTML element names
-        const doorStates = ["doorClosedPath","doorOpenPath","doorLockedPath"];
+        const doorStates = ['doorClosedPath','doorOpenPath','doorLockedPath'];
         
         // Loop through states, caching textures from provided paths
         for (let state of doorStates) {
@@ -223,7 +237,7 @@ Hooks.on('renderSettingsConfig', () => {
     form.addEventListener('submit', (e) => {
 
         // Door state keys used in game settings
-        const doorStates = ["doorClosedDefault","doorOpenDefault","doorLockedDefault"];
+        const doorStates = ['doorClosedDefault','doorOpenDefault','doorLockedDefault','doorSecretDefault'];
         
         // Loop through states, caching textures from provided paths
         for (let state of doorStates) {
@@ -258,6 +272,7 @@ Hooks.on('canvasInit', () => {
     cacheTex('doorClosedDefault');
     cacheTex('doorOpenDefault');
     cacheTex('doorLockedDefault');
+    cacheTex('doorSecretDefault');
     console.log(`${modName} texture loading complete`);
     
 });
