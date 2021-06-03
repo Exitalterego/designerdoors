@@ -244,7 +244,7 @@ Hooks.on('renderSettingsConfig', () => {
             const path = document.getElementsByName(`${modId}.${state}`)[0].value;
             e.preventDefault();
             TextureLoader.loader.loadImageTexture(path);
-        };
+        }
 
     });
 
