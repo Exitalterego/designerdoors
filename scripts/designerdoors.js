@@ -24,7 +24,7 @@ Hooks.on('setup', () => {
         let s = this.wall.data.ds;  
         if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
         
-        const wallPaths = this.wall.document.getFlag(modId, "doorIcon");
+        const wallPaths = this.wall.document.getFlag(modId, 'doorIcon');
         
         let path;
         if (s === ds.CLOSED && this.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET) {
@@ -32,14 +32,14 @@ Hooks.on('setup', () => {
         } else {
             // Determine texture to render
             if (s === ds.CLOSED) {
-                path = wallPaths?.doorClosedPath ?? game.settings.get(modId, "doorClosedDefault");
+                path = wallPaths?.doorClosedPath ?? game.settings.get(modId, 'doorClosedDefault');
         } else if (s === ds.OPEN) { 
-                path = wallPaths?.doorOpenPath ?? game.settings.get(modId, "doorOpenDefault");
+                path = wallPaths?.doorOpenPath ?? game.settings.get(modId, 'doorOpenDefault');
         } else if (s === ds.LOCKED) {
-                path = wallPaths?.doorLockedPath ?? game.settings.get(modId, "doorLockedDefault");
+                path = wallPaths?.doorLockedPath ?? game.settings.get(modId, 'doorLockedDefault');
         }
 
-        path ??= wallPaths?.doorClosedPath ?? game.settings.get(modId, "doorClosedDefault");
+        path ??= wallPaths?.doorClosedPath ?? game.settings.get(modId, 'doorClosedDefault');
         }
 
         return getTexture(path);
