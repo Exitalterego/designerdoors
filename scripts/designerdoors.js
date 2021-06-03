@@ -22,7 +22,7 @@ Hooks.on('setup', () => {
         // Determine door state
         const ds = CONST.WALL_DOOR_STATES;
         let s = this.wall.data.ds;  
-        if (!game.user.isGM && s === ds.LOCKED ) s = ds.CLOSED;
+        if (!game.user.isGM && s === ds.LOCKED ) { s = ds.CLOSED;}
         
         const wallPaths = this.wall.document.getFlag(modId, 'doorIcon');
         
@@ -127,7 +127,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 
     // If the wall is a door, extend the size of the wall config form
     app.setPosition({
-        height: "auto",
+        height: 'auto',
         width: 400,
     });
 
@@ -217,7 +217,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
         
         // Loop through states, caching textures from provided paths
         for (let state of doorStates) {
-            const elementName = `flags.${modId}.doorIcon.${state}`
+            const elementName = `flags.${modId}.doorIcon.${state}`;
             const path = document.getElementsByName(elementName)[0].value;
             e.preventDefault();
             TextureLoader.loader.loadImageTexture(path);
