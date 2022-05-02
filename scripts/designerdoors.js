@@ -209,7 +209,8 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     
     // On submitting the Wall Config form, requested textures are added to the cache
 
-    const form = document.getElementById('wall-config');
+    const wCName = "wall-sheet-".concat(data.data._id);
+    const form = document.getElementById(wCName);
     form.addEventListener('submit', (e) => {
         
         // Door state keys used to define HTML element names
