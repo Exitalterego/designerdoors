@@ -1,14 +1,27 @@
-## 2.0.0 - Foundryversary Edition - Jun 03, 2021
+## 3.0.0 - Foundryversary Edition - Jun 03, 2021
 ### New Features
+* While DD v2 worked in Foundry v9, it suffered from an error that involved the Wall Config tool. This has now been fixed, so DD v3 is now completely compatible with Foundry v9.
+
+### Bug Fixes
+* WallConfig element ID was changed in Foundry from "wall-config" to "wall-sheet-WALL_ID". This version now has had this updated
+
+### Known Issues
+* As this module has been changed to be compatible with Foundry 9, this version is specifically NOT backwards compatible with earlier Foundry versions.
+* I have not encountered any major issues during testing, but I have not tested this against other modules. If any issues or incompatibilities arise, please report them via the modules Github page.
+
+---
+
+### 2.0.0 - Foundryversary Edition - Jun 03, 2021
+#### New Features
 * Designer Doors is now compatible with Foundry 0.8.6!
 * Default icons can now be chosen with the Foundry file picker.
 * Added compatibility with Foundry's secret doors. A default icon can be chosen for these in the module settings. As these icons are only visible to the GM, custom icons per door have not been added.
 * Code has been cleaned up somewhat, making future maintenance easier. This is a work in progress though and future updates will likely continue this
 
-### Bug Fixes
+#### Bug Fixes
 * None
 
-### Known Issues
+#### Known Issues
 * As this module has been changed to be compatible with Foundry 0.8.6, this version is specifically NOT backwards compatible with earlier Foundry versions. Some of the code clean-up may make it into an update of Designer Doors 1.x.x versions, but features will not.
 * I have not encountered any major issues during testing, but I have not tested this against other modules. If any issues or incompatibilities arise, please report them via the modules Github page.
 
