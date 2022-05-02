@@ -1,4 +1,4 @@
-## 3.0.0 - Foundryversary Edition - Jun 03, 2021
+## 3.0.0 - One Year Later - May 03, 2022
 ### New Features
 * While DD v2 worked in Foundry v9, it suffered from an error that involved the Wall Config tool. This has now been fixed, so DD v3 is now completely compatible with Foundry v9.
 
