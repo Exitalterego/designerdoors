@@ -209,7 +209,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     
     // On submitting the Wall Config form, requested textures are added to the cache
 
-    const wCName = "wall-sheet-".concat(data.data._id);
+    const wCName = "WallConfig-Scene-".concat(game.scenes.viewed._id).concat("-Wall-").concat(data.data._id);
     const form = document.getElementById(wCName);
     form.addEventListener('submit', (e) => {
         
