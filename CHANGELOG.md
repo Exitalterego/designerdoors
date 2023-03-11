@@ -1,11 +1,25 @@
-## 3.0.0 - One Year Later - May 03, 2022
+## 3.1.0 - No Going Back - March 11, 2023
 ### New Features
-* While DD v2 worked in Foundry v9, it suffered from an error that involved the Wall Config tool. This has now been fixed, so DD v3 is now completely compatible with Foundry v9.
+* No new features to speak of, but all errors and console warnings have now been fixed. Theoretically, this should mean this version of DD will be stable and safe for future Foundry versions, assuming there are no more changes or revisions to the Foundry API.
+* Project manifest has been migrated to be compatible with Foundry 10. No going back from here!
 
 ### Bug Fixes
-* WallConfig element ID was changed in Foundry from "wall-config" to "wall-sheet-WALL_ID". This version now has had this updated
+* WallConfig element ID was changed in Foundry from "wall-sheet-WALL_ID" to "WallConfig-Scene-SCENE_ID-Wall-WALL_ID". This has been fixed *again*.
 
 ### Known Issues
+* As this module has been changed to be compatible with Foundry 10, this version is specifically NOT backwards compatible with earlier Foundry versions.
+* I have not encountered any major issues during testing, but I have not tested this against other modules. If any issues or incompatibilities arise, please report them via the modules Github page.
+
+---
+
+### 3.0.0 - One Year Later - May 03, 2022
+#### New Features
+* While DD v2 worked in Foundry v9, it suffered from an error that involved the Wall Config tool. This has now been fixed, so DD v3 is now completely compatible with Foundry v9.
+
+#### Bug Fixes
+* WallConfig element ID was changed in Foundry from "wall-config" to "wall-sheet-WALL_ID". This version now has had this updated
+
+#### Known Issues
 * As this module has been changed to be compatible with Foundry 9, this version is specifically NOT backwards compatible with earlier Foundry versions.
 * I have not encountered any major issues during testing, but I have not tested this against other modules. If any issues or incompatibilities arise, please report them via the modules Github page.
 
