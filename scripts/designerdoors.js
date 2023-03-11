@@ -21,13 +21,13 @@ Hooks.on('setup', () => {
 
         // Determine door state
         const ds = CONST.WALL_DOOR_STATES;
-        let s = this.wall.data.ds;  
+        let s = this.wall.document.ds;  
         if (!game.user.isGM && s === ds.LOCKED ) { s = ds.CLOSED;}
         
         const wallPaths = this.wall.document.getFlag(modId, 'doorIcon');
         
         let path;
-        if (s === ds.CLOSED && this.wall.data.door === CONST.WALL_DOOR_TYPES.SECRET) {
+        if (s === ds.CLOSED && this.wall.document.door === CONST.WALL_DOOR_TYPES.SECRET) {
             path = game.settings.get(modId, 'doorSecretDefault');
         } else {
             // Determine texture to render
@@ -255,7 +255,7 @@ Hooks.on('renderSettingsConfig', () => {
 Hooks.on('canvasInit', () => {
 
     // List of all walls in scene
-    const sceneWalls = game.scenes.viewed.data.walls;
+    const sceneWalls = game.scenes.viewed.walls;
     
     // Scan walls for DD flags
     for (let wall of sceneWalls){
