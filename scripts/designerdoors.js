@@ -115,7 +115,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 
     // If the wall is not a door, break out of this script.
     // This will stop Designer Doors being added to the wall config form
-    if (data.object.door === 0) {
+    if (data.doorType === 0) {
 
         app.setPosition({
             height: 270,
