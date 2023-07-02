@@ -1,4 +1,4 @@
-## 3.1.1 - Now Windows Compatible - March 11, 2023
+## 3.1.1 - Now Windows Compatible - July 02, 2023
 ### New Features
 * No new features added, but again the Foundry API was changed that introduced a few compatibility issues with Foundry 11. These have been ironed out and the module is now working again.
 *IMPORTANT NOTE:* The first two stable releases of Foundry 11, specifically 11.299 and 11.300 completely broke when trying to use Designer Doors. As I never managed to get a working version of Designer Doors for these Foundry versions, DD is skipping these and **will only be compatible from 11.301 onwards**.
