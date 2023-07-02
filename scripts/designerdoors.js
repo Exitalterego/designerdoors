@@ -115,7 +115,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
 
     // If the wall is not a door, break out of this script.
     // This will stop Designer Doors being added to the wall config form
-    if (data.doorType === 0) {
+    if (app.object.door === 0) {
 
         app.setPosition({
             height: 270,
@@ -221,7 +221,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
             const elementName = `flags.${modId}.doorIcon.${state}`;
             const path = document.getElementsByName(elementName)[0].value;
             e.preventDefault();
-            TextureLoader.loader.loadImageTexture(path);
+            TextureLoader.loader.loadTexture(path);
         };
 
     });
@@ -244,7 +244,7 @@ Hooks.on('renderSettingsConfig', () => {
         for (let state of doorStates) {
             const path = document.getElementsByName(`${modId}.${state}`)[0].value;
             e.preventDefault();
-            TextureLoader.loader.loadImageTexture(path);
+            TextureLoader.loader.loadTexture(path);
         }
 
     });
@@ -263,7 +263,7 @@ Hooks.on('canvasInit', () => {
             // Cycle through flag paths and submit to cache
             const pathsArray = Object.values(wall.getFlag(modId, 'doorIcon'));
             for (let path of pathsArray){
-                TextureLoader.loader.loadImageTexture(path);
+                TextureLoader.loader.loadTexture(path);
             };
         }
     };
