@@ -2,7 +2,7 @@
 ### New Features
 * No new features added, but there is a possibility a future update may expand functionality to include window icons.
 * Module compatibility checked on version 12 and all seems stable. No errors being thrown in console logs.
-*IMPORTANT NOTE:* The first two stable releases of Foundry 11, specifically 11.299 and 11.300 completely broke when trying to use Designer Doors. As I never managed to get a working version of Designer Doors for these Foundry versions, DD is skipping these and **will only be compatible from 11.301 onwards**.
+* *IMPORTANT NOTE:* The first two stable releases of Foundry 11, specifically 11.299 and 11.300 completely broke when trying to use Designer Doors. As I never managed to get a working version of Designer Doors for these Foundry versions, DD is skipping these and **will only be compatible from 11.301 onwards**.
 
 ### Bug Fixes
 * Added libwrapper module as a required dependency. Previously this was optional.
