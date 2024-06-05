@@ -1,4 +1,4 @@
-## 3.1.2 - Now Windows Compatible - July 02, 2023
+## 3.1.2 - The Annual Version Bump - June 05, 2024
 ### New Features
 * No new features added, but there is a possibility a future update may expand functionality to include window icons.
 * Module compatibility checked on version 12 and all seems stable. No errors being thrown in console logs.
