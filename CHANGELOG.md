@@ -1,13 +1,27 @@
-## 3.1.1 - Now Windows Compatible - July 02, 2023
+## 3.1.2 - Now Windows Compatible - July 02, 2023
 ### New Features
-* No new features added, but again the Foundry API was changed that introduced a few compatibility issues with Foundry 11. These have been ironed out and the module is now working again.
+* No new features added, but there is a possibility a future update may expand functionality to include window icons.
+* Module compatibility checked on version 12 and all seems stable. No errors being thrown in console logs.
 *IMPORTANT NOTE:* The first two stable releases of Foundry 11, specifically 11.299 and 11.300 completely broke when trying to use Designer Doors. As I never managed to get a working version of Designer Doors for these Foundry versions, DD is skipping these and **will only be compatible from 11.301 onwards**.
 
 ### Bug Fixes
+* Added libwrapper module as a required dependency. Previously this was optional.
+
+### Known Issues
+* I have not encountered any major issues during testing, but I have not tested this against other modules. If any issues or incompatibilities arise, please report them via the modules Github page.
+
+---
+
+### 3.1.1 - Now Windows Compatible - July 02, 2023
+#### New Features
+* No new features added, but again the Foundry API was changed that introduced a few compatibility issues with Foundry 11. These have been ironed out and the module is now working again.
+*IMPORTANT NOTE:* The first two stable releases of Foundry 11, specifically 11.299 and 11.300 completely broke when trying to use Designer Doors. As I never managed to get a working version of Designer Doors for these Foundry versions, DD is skipping these and **will only be compatible from 11.301 onwards**.
+
+#### Bug Fixes
 * Replaced TextureImageLoader with TextureLoader due to deprication in future Foundry versions.
 * Fixed the WallConfig not loading correctly. Thanks to [esheyw](https://github.com/esheyw) for spotting this and providing the fix at the same time!
 
-### Known Issues
+#### Known Issues
 * As this module has been changed to be compatible with Foundry 11, this version is specifically NOT backwards compatible with earlier Foundry versions. Also see the above note about Foundry v11 subversions
 * I have not encountered any major issues during testing, but I have not tested this against other modules. If any issues or incompatibilities arise, please report them via the modules Github page.
 
