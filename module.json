@@ -15,6 +15,13 @@
         "maximum": 12.999,
         "verified": 12.999
     },
+    "relationships": {
+        "requires": [{
+            "id": "lib-wrapper",
+            "type": "module",
+            "manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/download/v1.12.13.1/module.json"
+        }]
+    },
     "type": "module",
     "author": "Exitalterego",
     "manifestPlusVersion": "1.2.0",
