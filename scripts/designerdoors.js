@@ -5,11 +5,53 @@ import { libWrapper } from './shim.js';
 const modName = 'Designer Doors';
 const modId = 'designerdoors';
 
+// Cross-version texture preloader (v11–v13)
+function loadTextureCompat(path) {
+  try {
+    const loader =
+      foundry?.canvas?.TextureLoader?.loader ||       // v12–v13
+      globalThis?.TextureLoader?.loader ||            // v11 global
+      null;
+
+    if (loader?.loadTexture) return loader.loadTexture(path);
+
+    // Fallback: just create a PIXI texture to hint the cache
+    const TexFrom = (globalThis.PIXI?.Texture ?? globalThis.Texture)?.from;
+    if (typeof TexFrom === "function") TexFrom(path);
+  } catch (e) {
+    console.warn(`[${modId}] Texture preload failed for:`, path, e);
+  }
+}
+
+// Cross-version texture factory (v11–v13)
+function textureFromCompat(path) {
+  try {
+    // v13+ helper if present
+    const getTex = foundry?.canvas?.getTexture;
+    if (typeof getTex === "function") return getTex(path);
+    // v11/v12: fall back to PIXI
+    const TexFrom = (globalThis.PIXI?.Texture ?? globalThis.Texture)?.from;
+    if (typeof TexFrom === "function") return TexFrom(path);
+  } catch (e) {
+    console.warn(`[${modId}] textureFromCompat failed for: ${path}`, e);
+  }
+  return null;
+}
+
+// Cross-version file picker (v11-v13)
+function resolveFilePickerClass() {
+  return (
+    CONFIG?.ux?.FilePicker ||                                      // v13+ override point
+    foundry?.applications?.apps?.FilePicker?.implementation ||     // v13 namespaced
+    globalThis.FilePicker                                          // v11 global
+  );
+}
+
 // Global function to cache default textures
 const cacheTex = ((key) => {
 
     const defaultPath = game.settings.get(modId, key);
-    TextureLoader.loader.loadTexture(defaultPath);
+    loadTextureCompat(defaultPath);
 
 });
 
@@ -42,10 +84,14 @@ Hooks.on('setup', () => {
         path ??= wallPaths?.doorClosedPath ?? game.settings.get(modId, 'doorClosedDefault');
         }
 
-        return getTexture(path);
+        return textureFromCompat(path);
     }
         
-    libWrapper.register( modId, 'DoorControl.prototype._getTexture', getTextureOverride, 'OVERRIDE');
+    const hasNamespacedDoorControl = !!(foundry?.canvas?.containers?.DoorControl);
+    const target = hasNamespacedDoorControl
+      ? 'foundry.canvas.containers.DoorControl.prototype._getTexture'  // v13+
+      : 'DoorControl.prototype._getTexture';                            // v11–v12
+    libWrapper.register(modId, target, getTextureOverride, 'OVERRIDE');
     
     console.log('Loading Designer Doors module...');
 
@@ -112,143 +158,184 @@ Hooks.on('setup', () => {
 
 // Wall Config extension. Allows each door to have individual icons
 Hooks.on('renderWallConfig', (app, html, data) => {
+  // Prefer the document (AppV2); fall back for older patterns
+  const wallDoc = app.document ?? app.object?.document ?? app.object ?? null;
+  if (!wallDoc) return;
 
-    // If the wall is not a door, break out of this script.
-    // This will stop Designer Doors being added to the wall config form
-    if (app.object.door === 0) {
+  // If the wall is not a door, shrink and exit
+  if ((wallDoc.door ?? 0) === 0) {
+    app.setPosition({ height: 270, width: 400 });
+    return;
+  }
 
-        app.setPosition({
-            height: 270,
-            width: 400,
-        });
+  // Resize to make space for extra fields
+  app.setPosition({ height: 'auto', width: 400 });
+
+  // Resolve or initialize the per-door flag
+  let thisDoor = wallDoc.getFlag(modId, 'doorIcon');
+  if (thisDoor === undefined) {
+    thisDoor = {
+      doorClosedPath: game.settings.get(modId, 'doorClosedDefault'),
+      doorOpenPath: game.settings.get(modId, 'doorOpenDefault'),
+      doorLockedPath: game.settings.get(modId, 'doorLockedDefault'),
+    };
+    // setFlag returns a Promise; we don't need to await it here
+    wallDoc.setFlag(modId, 'doorIcon', thisDoor);
+  }
+
+  const doorClosedFlag = thisDoor?.doorClosedPath ?? '';
+  const doorOpenFlag   = thisDoor?.doorOpenPath   ?? '';
+  const doorLockedFlag = thisDoor?.doorLockedPath ?? '';
+
+  // Build our additional form block
+  const message = `
+    <div class="form-group">
+      <label>Door Icons</label>
+      <p class="notes">File paths to icons representing various door states.</p>
+    </div>
+
+    <div class="form-group">
+      <label>Door Closed</label>
+      <div class="form-fields">
+        <button type="button" class="file-picker" data-type="image" data-target="flags.${modId}.doorIcon.doorClosedPath" title="Browse Files" tabindex="-1">
+          <i class="fas fa-file-import fa-fw"></i>
+        </button>
+        <input class="img" type="text" name="flags.${modId}.doorIcon.doorClosedPath" value="${doorClosedFlag}" placeholder="Closed Door Icon Path" data-dtype="String" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Door Open</label>
+      <div class="form-fields">
+        <button type="button" class="file-picker" data-type="image" data-target="flags.${modId}.doorIcon.doorOpenPath" title="Browse Files" tabindex="-1">
+          <i class="fas fa-file-import fa-fw"></i>
+        </button>
+        <input class="img" type="text" name="flags.${modId}.doorIcon.doorOpenPath" value="${doorOpenFlag}" placeholder="Open Door Icon Path" data-dtype="String" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Door Locked</label>
+      <div class="form-fields">
+        <button type="button" class="file-picker" data-type="image" data-target="flags.${modId}.doorIcon.doorLockedPath" title="Browse Files" tabindex="-1">
+          <i class="fas fa-file-import fa-fw"></i>
+        </button>
+        <input class="img" type="text" name="flags.${modId}.doorIcon.doorLockedPath" value="${doorLockedFlag}" placeholder="Locked Door Icon Path" data-dtype="String" />
+      </div>
+    </div>
+  `;
+
+  // Normalize the hook's HTML param (HTMLElement vs jQuery wrapper)
+  const rootEl = (html instanceof HTMLElement) ? html : html?.[0];
+  if (!rootEl) return;
+
+  // Prefer the “Door Configuration” fieldset; fall back sensibly.
+  // Heuristics:
+  // 1) fieldset with a legend containing "Door Configuration"
+  // 2) fieldset that contains inputs named for door settings
+  // 3) else the active/main tab, else the root
+  let containerEl =
+    // 1) Legend text match
+    [...rootEl.querySelectorAll('fieldset')].find(fs =>
+      fs.querySelector('legend')?.textContent?.toLowerCase().includes('door configuration')
+    ) ||
+    // 2) Contains door-related inputs (type/state)
+    [...rootEl.querySelectorAll('fieldset')].find(fs =>
+      fs.querySelector('[name="door"], [name="ds"], select[name="door"], select[name="ds"]')
+    ) ||
+    // 3) Fallbacks
+    rootEl.querySelector('.tab.active') ||
+    rootEl.querySelector('.tab[data-tab="main"]') ||
+    rootEl;
+
+  // Append our custom fields to the chosen container
+  containerEl.insertAdjacentHTML('beforeend', message);
+
+  // Resolve the form element once (AppV2 exposes app.form)
+  const form = app.form ?? rootEl.closest('form');
+  if (!form) return;
+
+  // Attach a version-agnostic FilePicker handler
+  rootEl.querySelectorAll('button.file-picker').forEach(btn => {
+    btn.addEventListener('click', ev => {
+      ev.preventDefault();
+      const targetName = ev.currentTarget?.dataset?.target;
+      const type = ev.currentTarget?.dataset?.type || 'image';
+      if (!targetName) return;
+
+      const input = form.querySelector(`[name="${targetName}"]`);
+      const current = input?.value ?? '';
+	  
+	  // v11-friendly: if the app exposes a picker activator, delegate to it.
+      const activateFP = (app._activateFilePicker ?? app.activateFilePicker);
+      if (typeof activateFP === 'function') {
+        // Core handler expects `this` = app and the click event
+        return activateFP.call(app, ev);
+      }
+
+      // v12–v13 (or if the above isn’t present): construct a picker ourselves
+      const Picker = resolveFilePickerClass();
+      if (typeof Picker !== "function") {
+        ui.notifications?.warn?.("[designerdoors] FilePicker not available");
         return;
-
-    }
-
-    // If the wall is a door, extend the size of the wall config form
-    app.setPosition({
-        height: 'auto',
-        width: 400,
+      }
+	  
+      const fp = new Picker({
+        type,
+        current,
+        callback: (url) => {
+          if (!input) return;
+          input.value = url;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+      fp.render(true);
     });
+  });
 
-    let thisDoor; // Object containing closed, open and locked paths as parameters
-
-    // Flag logic.
-    // Check for initial flag. If not present set default values.
-    if (app.object.getFlag(modId, 'doorIcon') === undefined) {
-
-        // If wall has no flag, populate thisDoor from default settings
-        thisDoor = {
-            doorClosedPath: game.settings.get(modId, 'doorClosedDefault'),
-            doorOpenPath: game.settings.get(modId, 'doorOpenDefault'),
-            doorLockedPath: game.settings.get(modId, 'doorLockedDefault'),
-        };
-        // Then set flag with contents of thisDoor
-        app.object.setFlag(modId, 'doorIcon', thisDoor);
-
-    } else {
-
-        // If the flag already exist, populate thisDoor with the flag
-        thisDoor = app.object.getFlag(modId, 'doorIcon');
-
+  form.addEventListener('submit', () => {
+    const fields = [
+      `flags.${modId}.doorIcon.doorClosedPath`,
+      `flags.${modId}.doorIcon.doorOpenPath`,
+      `flags.${modId}.doorIcon.doorLockedPath`,
+    ];
+    for (const name of fields) {
+      const input = form.querySelector(`[name="${name}"]`);
+      const path = input?.value?.trim();
+      if (path) loadTextureCompat(path);
     }
-
-    const doorClosedFlag = thisDoor.doorClosedPath;
-    const doorOpenFlag = thisDoor.doorOpenPath;
-    const doorLockedFlag = thisDoor.doorLockedPath;
-
-    // html to extend Wall Config form
-    const message =
-    `<div class="form-group">
-        <label>Door Icons</label>
-        <p class="notes">File paths to icons representing various door states.</p>
-        </div>
-
-    <div class="form-group">
-		<label>Door Close</label>
-		<div class="form-fields">
-			<button type="button" class="file-picker" data-type="img" data-target="flags.${modId}.doorIcon.doorClosedPath" title="Browse Files" tabindex="-1">
-			    <i class="fas fa-file-import fa-fw"></i>
-			</button>
-			<input class="img" type="text" name="flags.${modId}.doorIcon.doorClosedPath" value="${doorClosedFlag ? doorClosedFlag : ``}" placeholder="Closed Door Icon Path" data-dtype="String" />
-		</div>
-	</div>
-
-    <div class="form-group">
-		<label>Door Open</label>
-		<div class='form-fields'>
-			<button type='button' class='file-picker' data-type='img' data-target='flags.${modId}.doorIcon.doorOpenPath' title='Browse Files' tabindex='-1'>
-				<i class='fas fa-file-import fa-fw'></i>
-			</button>
-			<input class='img' type='text' name='flags.${modId}.doorIcon.doorOpenPath' value='${doorOpenFlag ? doorOpenFlag : ``}' placeholder='Open Door Icon Path' data-dtype='String' />
-	    </div>
-	</div>
-
-    <div class='form-group'>
-		<label>Door Locked</label>
-		<div class='form-fields'>
-			<button type='button' class='file-picker' data-type='img' data-target='flags.${modId}.doorIcon.doorLockedPath' title='Browse Files' tabindex='-1'>
-			    <i class='fas fa-file-import fa-fw'></i>
-			</button>
-			<input class='img' type='text' name='flags.${modId}.doorIcon.doorLockedPath' value='${doorLockedFlag ? doorLockedFlag : ``}' placeholder='Locked Door Icon Path' data-dtype='String' />
-        </div>
-	</div>
-    `;
-
-    // Thanks to Calego#0914 on the League of Extraordinary FoundryVTT Developers
-    // Discord server for the jQuery assistance here.
-    // Adds form-group and buttons to the correct position on the Wall Config
-    html.find('.form-group').last().after(message);
-
-    // File Picker buttons
-    
-    // Is it possible that this may cause conflicts with other modules that add file picker buttons? To be tested.
-    // May need mod specific CSS class for file picker button - ddfile-picker?
-    
-    html.find('button.file-picker').on('click', app._activateFilePicker.bind(app));
-    
-    // On submitting the Wall Config form, requested textures are added to the cache
-
-    const wCName = "WallConfig-Scene-".concat(game.scenes.viewed._id).concat("-Wall-").concat(data.data._id);
-    const form = document.getElementById(wCName);
-    form.addEventListener('submit', (e) => {
-        
-        // Door state keys used to define HTML element names
-        const doorStates = ['doorClosedPath','doorOpenPath','doorLockedPath'];
-        
-        // Loop through states, caching textures from provided paths
-        for (let state of doorStates) {
-            const elementName = `flags.${modId}.doorIcon.${state}`;
-            const path = document.getElementsByName(elementName)[0].value;
-            e.preventDefault();
-            TextureLoader.loader.loadTexture(path);
-        };
-
-    });
-
+  });
 });
 
-// Cache default textures on submitting Settings Config
-// Only really needed if default textures are changed, but as I haven't
-// yet figured out how to only run on changes, it will just run on every
-// submission of the settings form.
-Hooks.on('renderSettingsConfig', () => {
+// Cache default textures on submitting Settings Config (v11–v13 safe)
+Hooks.on('renderSettingsConfig', (app, html /*, data */) => {
+  // Prefer Application's form (AppV2), then html root, then legacy fallback
+  const rootEl = (html instanceof HTMLElement) ? html : html?.[0];
+  const form = app?.form ?? rootEl?.closest?.('form') ?? document.getElementById('client-settings');
+  if (!form) return;
 
-    const form = document.getElementById('client-settings');
-    form.addEventListener('submit', (e) => {
+  // Avoid multiple listeners if the panel re-renders
+  form.removeEventListener?.('__dd_cache_submit__', form.__dd_cache_submit_handler__);
 
-        // Door state keys used in game settings
-        const doorStates = ['doorClosedDefault','doorOpenDefault','doorLockedDefault','doorSecretDefault'];
-        
-        // Loop through states, caching textures from provided paths
-        for (let state of doorStates) {
-            const path = document.getElementsByName(`${modId}.${state}`)[0].value;
-            e.preventDefault();
-            TextureLoader.loader.loadTexture(path);
-        }
+  const handler = () => {
+    const fields = [
+      `${modId}.doorClosedDefault`,
+      `${modId}.doorOpenDefault`,
+      `${modId}.doorLockedDefault`,
+      `${modId}.doorSecretDefault`,
+    ];
+    for (const name of fields) {
+      const input = form.querySelector(`[name="${name}"]`);
+      const path = input?.value?.trim();
+      if (path) loadTextureCompat(path);
+    }
+  };
 
-    });
-
+  // Tag the handler so we can safely remove/re-add on re-render
+  form.__dd_cache_submit_handler__ = handler;
+  form.addEventListener('submit', handler);
+  // Marker event name to allow removeEventListener above to no-op safely
+  form.addEventListener?.('__dd_cache_submit__', handler);
 });
 
 // On scene change, scan for doors and cache textures
@@ -263,7 +350,7 @@ Hooks.on('canvasInit', () => {
             // Cycle through flag paths and submit to cache
             const pathsArray = Object.values(wall.getFlag(modId, 'doorIcon'));
             for (let path of pathsArray){
-                TextureLoader.loader.loadTexture(path);
+                loadTextureCompat(path);
             };
         }
     };
