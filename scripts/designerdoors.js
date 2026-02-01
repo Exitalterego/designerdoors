@@ -302,6 +302,22 @@ Hooks.on('renderWallConfig', (app, html, data) => {
     });
   });
 
+  // Warm cache when any of our per-door fields change
+  const wallFlagNames = [
+	`flags.${modId}.doorIcon.doorClosedPath`,
+	`flags.${modId}.doorIcon.doorOpenPath`,
+	`flags.${modId}.doorIcon.doorLockedPath`,
+	`flags.${modId}.doorIcon.doorSecretPath`,
+  ];
+
+  form.addEventListener('change', (ev) => {
+	const t = ev.target;
+	if (!(t instanceof HTMLInputElement)) return;
+	if (!wallFlagNames.includes(t.name)) return;
+	const p = t.value?.trim();
+	if (p) loadTextureCompat(p);
+  }, { passive: true });
+	
   form.addEventListener('submit', () => {
     const fields = [
       `flags.${modId}.doorIcon.doorClosedPath`,
@@ -315,6 +331,47 @@ Hooks.on('renderWallConfig', (app, html, data) => {
       if (path) loadTextureCompat(path);
     }
   });
+});
+
+// Warm textures when a wall updates AND refresh the affected control (v11–v13 safe)
+Hooks.on('updateWall', (doc, changes) => {
+  try {
+    // Only act if our flags changed or door props changed
+    const ddChanged = !!(changes?.flags?.[modId] || changes?.flags?.[`-=${modId}`]);
+    const doorChanged = ('door' in (changes ?? {})) || ('ds' in (changes ?? {}));
+    if (!ddChanged && !doorChanged) return;
+
+    // Only if this wall is on the active scene
+    const activeSceneId = canvas?.scene?.id;
+    const wallSceneId = doc?.parent?.id ?? doc?.scene?._id; // v11 fallback
+    if (activeSceneId && wallSceneId && activeSceneId !== wallSceneId) return;
+
+    // Pre-cache any icon paths present
+    const f = doc.getFlag(modId, 'doorIcon');
+    if (f && typeof f === 'object') {
+      for (const k of ['doorClosedPath', 'doorOpenPath', 'doorLockedPath', 'doorSecretPath']) {
+        const p = f[k];
+        if (p) loadTextureCompat(p);
+      }
+    }
+
+    // Targeted refresh: find this wall's DoorControl and redraw it
+    const doorsLayer = canvas?.controls?.doors;
+    const children = doorsLayer?.children;
+    const control = Array.isArray(children) ? children.find(dc => dc?.wall?.id === doc.id) : null;
+
+    if (control?.draw) {
+      control.draw();               // Best case: redraw only this control
+    } else if (canvas?.controls?.refresh) {
+      canvas.controls.refresh();    // Fallback: refresh controls layer
+    } else if (doorsLayer?.draw) {
+      doorsLayer.draw();            // Older fallback
+    } else if (canvas?.draw) {
+      canvas.draw();                // Last resort
+    }
+  } catch (e) {
+    console.warn(`[${modId}] updateWall refresh failed`, e);
+  }
 });
 
 // Cache default textures on submitting Settings Config (v11–v13 safe)
@@ -344,6 +401,24 @@ Hooks.on('renderSettingsConfig', (app, html /*, data */) => {
   // Tag the handler so we can safely remove/re-add on re-render
   form.__dd_cache_submit_handler__ = handler;
   form.addEventListener('submit', handler);
+
+// Warm cache when any default path changes in settings
+  const settingNames = [
+    `${modId}.doorClosedDefault`,
+    `${modId}.doorOpenDefault`,
+    `${modId}.doorLockedDefault`,
+    `${modId}.doorSecretDefault`,
+  ];
+
+  form.addEventListener('change', (ev) => {
+    const t = ev.target;
+    if (!(t instanceof HTMLInputElement)) return;
+    if (!settingNames.includes(t.name)) return;
+    const p = t.value?.trim();
+    if (p) loadTextureCompat(p);
+  }, { passive: true });
+
+	
   // Marker event name to allow removeEventListener above to no-op safely
   form.addEventListener?.('__dd_cache_submit__', handler);
 });
