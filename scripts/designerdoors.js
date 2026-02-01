@@ -70,7 +70,8 @@ Hooks.on('setup', () => {
         
         let path;
         if (s === ds.CLOSED && this.wall.document.door === CONST.WALL_DOOR_TYPES.SECRET) {
-            path = game.settings.get(modId, 'doorSecretDefault');
+			// Prefer per-door flag, fall back to world default
+			path = wallPaths?.doorSecretPath ?? game.settings.get(modId, 'doorSecretDefault');
         } else {
             // Determine texture to render
             if (s === ds.CLOSED) {
@@ -151,9 +152,6 @@ Hooks.on('setup', () => {
     cacheTex('doorLockedDefault');
     cacheTex('doorSecretDefault');
     console.log(`${modName} texture loading complete`);
-    
-
-
 });
 
 // Wall Config extension. Allows each door to have individual icons
@@ -186,6 +184,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
   const doorClosedFlag = thisDoor?.doorClosedPath ?? '';
   const doorOpenFlag   = thisDoor?.doorOpenPath   ?? '';
   const doorLockedFlag = thisDoor?.doorLockedPath ?? '';
+  const doorSecretFlag = thisDoor?.doorSecretPath ?? '';
 
   // Build our additional form block
   const message = `
@@ -222,7 +221,17 @@ Hooks.on('renderWallConfig', (app, html, data) => {
         </button>
         <input class="img" type="text" name="flags.${modId}.doorIcon.doorLockedPath" value="${doorLockedFlag}" placeholder="Locked Door Icon Path" data-dtype="String" />
       </div>
-    </div>
+     </div>
+
+	<div class="form-group">
+	  <label>Secret Door (Closed)</label>
+	  <div class="form-fields">
+	    <button type="button" class="file-picker" data-type="image" data-target="flags.${modId}.doorIcon.doorSecretPath" title="Browse Files" tabindex="-1">
+		  <i class="fas fa-file-import fa-fw"></i>
+		</button>
+		<input class="img" type="text" name="flags.${modId}.doorIcon.doorSecretPath" value="${doorSecretFlag}" placeholder="Secret Door Icon Path" data-dtype="String" />
+	  </div>
+	 </div>
   `;
 
   // Normalize the hook's HTML param (HTMLElement vs jQuery wrapper)
@@ -298,6 +307,7 @@ Hooks.on('renderWallConfig', (app, html, data) => {
       `flags.${modId}.doorIcon.doorClosedPath`,
       `flags.${modId}.doorIcon.doorOpenPath`,
       `flags.${modId}.doorIcon.doorLockedPath`,
+	  `flags.${modId}.doorIcon.doorSecretPath`,
     ];
     for (const name of fields) {
       const input = form.querySelector(`[name="${name}"]`);
