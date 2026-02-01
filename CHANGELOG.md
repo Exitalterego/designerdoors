@@ -1,12 +1,25 @@
-## 3.2.0 - 2025 Foundry Version Bump - August 22, 2025
+## 3.3.0 - Secret Doors and Less Refreshing - February 01, 2026
 ### New Features
+* Secret doors can now have their own per-wall icons set by the GM. While of limited use in most cases, this has a least one use case that was brought to my attention. It could also allow a secret door to be given a letter/number icon referencing back to notes on how players open or find the door.
+* Icon caching has been given some much needed improvements. Icons should now be placed in cache as soon as the GM/DM chooses them in the various config windows. This means that as soon as a config windows is "saved" the images refresh on the canvas, thus removing the need to change scene or refresh the canvas to be able to see the changes.
+
+### Bug Fixes
+* No bug fixes have taken place for this release.
+
+### Known Issues
+* I have not encountered any major issues during testing, but I have not tested this against other modules. If any issues or incompatibilities arise, please report them via the modules Github page.
+
+---
+
+### 3.2.0 - 2025 Foundry Version Bump - August 22, 2025
+#### New Features
 * No new features added, but this is the first time I've looked at the code in over a year and my creative juices are flowing so who knows!
 * Added backend functionality to provide backwards compatibility for all Foundry versions from 11.301 through 13. Tested and seems to be working well.
 
-### Bug Fixes
+#### Bug Fixes
 * Updated various namespaces within the code that while working now, would eventually end up causing problems with future versions of Foundry.
 
-### Known Issues
+#### Known Issues
 * I have not encountered any major issues during testing, but I have not tested this against other modules. If any issues or incompatibilities arise, please report them via the modules Github page.
 
 ---
