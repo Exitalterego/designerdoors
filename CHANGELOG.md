@@ -1,12 +1,18 @@
-## 3.3.0 - Secret Doors and Less Refreshing - February 01, 2026
+## 3.3.1 - Foundry 14 Version Bump - September 13,  2026
 ### New Features
+* Nothing new has been added. This is simply a compatibility release for Foundry 14. Designer Doors has been tested and no errors were being generated under normal use.
+
+---
+
+### 3.3.0 - Secret Doors and Less Refreshing - February 01, 2026
+#### New Features
 * Secret doors can now have their own per-wall icons set by the GM. While of limited use in most cases, this has a least one use case that was brought to my attention. It could also allow a secret door to be given a letter/number icon referencing back to notes on how players open or find the door.
 * Icon caching has been given some much needed improvements. Icons should now be placed in cache as soon as the GM/DM chooses them in the various config windows. This means that as soon as a config windows is "saved" the images refresh on the canvas, thus removing the need to change scene or refresh the canvas to be able to see the changes.
 
-### Bug Fixes
+#### Bug Fixes
 * No bug fixes have taken place for this release.
 
-### Known Issues
+#### Known Issues
 * I have not encountered any major issues during testing, but I have not tested this against other modules. If any issues or incompatibilities arise, please report them via the modules Github page.
 
 ---
